@@ -17,9 +17,9 @@
 
       <div id="navMenu" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item">Accueil</a>
+          <a class="navbar-item" @click="onHomeClick">Accueil</a>
 
-          <a class="navbar-item">Calculette</a>
+          <a class="navbar-item" @click="onComputeClick">Calculette</a>
         </div>
 
         <div class="navbar-end">
@@ -63,6 +63,14 @@ export default {
           $target.classList.toggle("is-active");
         });
       });
+    }
+  },
+  methods: {
+    onHomeClick() {
+      this.$router.push({ path: "/" });
+    },
+    onComputeClick() {
+      this.$router.push({ path: "/compute" });
     }
   }
 };
