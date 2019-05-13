@@ -10,12 +10,13 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "build:android": "npm run build && cordova build android && cordova run android --device"
   },
   "dependencies": {
     "bulma": "^0.7.4",
     "bulma-accordion": "^2.0.1",
-    "cordova-android": "^6.4.0",
+    "cordova-android": "^8.0.0",
     "vue": "^2.5.2",
     "vue-material": "^1.0.0-beta-7",
     "vue-router": "^3.0.1"
@@ -85,6 +86,9 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-whitelist": {}
-    }
+    },
+    "platforms": [
+      "android"
+    ]
   }
 }
