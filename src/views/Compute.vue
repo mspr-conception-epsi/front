@@ -102,7 +102,7 @@ export default {
     },
     computeOperatingPurchasePrice() {
       this.operatingPurchasePrice =
-        this.grossPurchasePrice * (1 - this.discountRate);
+        this.grossPurchasePrice * (1 - this.discountRate / 100);
     },
     computeOperatingSellPrice() {
       this.operatingSellPrice = this.operatingPurchasePrice * this.multiplier;
