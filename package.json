@@ -11,13 +11,18 @@
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
     "build": "node build/build.js",
-    "build:android": "npm run build && cordova build android && cordova run android --device"
+    "build:android": "npm run build && cordova build android && cordova run android --device",
+    "build:browser": "npm run build && cordova build browser && cordova run browser"
   },
   "dependencies": {
     "bulma": "^0.7.4",
     "bulma-accordion": "^2.0.1",
     "cordova-android": "^8.0.0",
+    "cordova-browser": "^6.0.0",
+    "cordova-plugin-geolocation": "^4.0.1",
+    "cordova-plugin-googlemaps": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps",
     "vue": "^2.5.2",
+    "vue-cordova": "^0.1.2",
     "vue-material": "^1.0.0-beta-7",
     "vue-router": "^3.0.1"
   },
@@ -85,10 +90,13 @@
   ],
   "cordova": {
     "plugins": {
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-geolocation": {},
+      "cordova-plugin-googlemaps": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "browser"
     ]
   }
 }
