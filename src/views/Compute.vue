@@ -3,82 +3,90 @@
     <div class="container">
       <h1 class="title is-text-align-center">Calculatrice</h1>
       <button class="accordion" v-on:click="discountRatePanel = !discountRatePanel">Taux de remise</button>
-      <div class="panel is-vertical-center" v-show="discountRatePanel">
-        <span>Prix d'achat net</span>
-        <input type="text" class="formElement" v-model="operatingPurchasePrice">
-        <span>Prix d'achat brut</span>
-        <input type="text" class="formElement" v-model="grossPurchasePrice">
-        <input
-          type="submit"
-          class="submit formElement"
-          value="Calculer"
-          v-on:click="computeDiscountRate"
-        >
-        <span
-          class="result"
-          v-show="discountRate"
-        >Résultat: {{ parseFloat(this.discountRate).toFixed(2) }} %</span>
-      </div>
+      <transition name="fade">
+        <div class="panel is-vertical-center" v-show="discountRatePanel">
+          <span>Prix d'achat net</span>
+          <input type="text" class="formElement" v-model="operatingPurchasePrice">
+          <span>Prix d'achat brut</span>
+          <input type="text" class="formElement" v-model="grossPurchasePrice">
+          <input
+            type="submit"
+            class="submit formElement"
+            value="Calculer"
+            v-on:click="computeDiscountRate"
+          >
+          <span
+            class="result"
+            v-show="discountRate"
+          >Résultat: {{ parseFloat(this.discountRate).toFixed(2) }} %</span>
+        </div>
+      </transition>
       <button
         class="accordion"
         v-on:click="operatingPurchasePricePanel = !operatingPurchasePricePanel"
       >Prix d'achat net</button>
-      <div class="panel is-vertical-center" v-show="operatingPurchasePricePanel">
-        <span>Prix d'achat brut</span>
-        <input type="text" class="formElement" v-model="grossPurchasePrice">
-        <span>Taux de remise</span>
-        <input type="text" class="formElement" v-model="discountRate">
-        <input
-          type="submit"
-          class="submit formElement"
-          value="Calculer"
-          v-on:click="computeOperatingPurchasePrice"
-        >
-        <span
-          class="result"
-          v-show="operatingPurchasePrice"
-        >Résultat: {{ parseFloat(this.operatingPurchasePrice).toFixed(2) }}</span>
-      </div>
+      <transition name="fade">
+        <div class="panel is-vertical-center" v-show="operatingPurchasePricePanel">
+          <span>Prix d'achat brut</span>
+          <input type="text" class="formElement" v-model="grossPurchasePrice">
+          <span>Taux de remise</span>
+          <input type="text" class="formElement" v-model="discountRate">
+          <input
+            type="submit"
+            class="submit formElement"
+            value="Calculer"
+            v-on:click="computeOperatingPurchasePrice"
+          >
+          <span
+            class="result"
+            v-show="operatingPurchasePrice"
+          >Résultat: {{ parseFloat(this.operatingPurchasePrice).toFixed(2) }}</span>
+        </div>
+      </transition>
       <button
         class="accordion"
         v-on:click="operatingSellPricePanel = !operatingSellPricePanel"
       >Prix de vente net</button>
-      <div class="panel is-vertical-center" v-show="operatingSellPricePanel">
-        <span>Prix d'achat net</span>
-        <input type="text" class="formElement" v-model="operatingPurchasePrice">
-        <span>Coefficient multiplicateur</span>
-        <input type="text" class="formElement" v-model="multiplier">
-        <input
-          type="submit"
-          class="submit formElement"
-          value="Calculer"
-          v-on:click="computeOperatingSellPrice"
-        >
-        <span
-          class="result"
-          v-show="operatingSellPrice"
-        >Résultat: {{ parseFloat(this.operatingSellPrice).toFixed(2) }}</span>
-      </div>
+      <transition name="fade">
+        <div class="panel is-vertical-center" v-show="operatingSellPricePanel">
+          <span>Prix d'achat net</span>
+          <input type="text" class="formElement" v-model="operatingPurchasePrice">
+          <span>Coefficient multiplicateur</span>
+          <input type="text" class="formElement" v-model="multiplier">
+          <input
+            type="submit"
+            class="submit formElement"
+            value="Calculer"
+            v-on:click="computeOperatingSellPrice"
+          >
+          <span
+            class="result"
+            v-show="operatingSellPrice"
+          >Résultat: {{ parseFloat(this.operatingSellPrice).toFixed(2) }}</span>
+        </div>
+      </transition>
       <button
         class="accordion"
         v-on:click="multiplierPanel = !multiplierPanel"
       >Coefficient multiplicateur</button>
-      <div class="panel is-vertical-center" v-show="multiplierPanel">
-        <span>Prix de vente net</span>
-        <input type="text" class="formElement" v-model="operatingSellPrice">
-        <span>Prix d'achat net</span>
-        <input type="text" class="formElement" v-model="operatingPurchasePrice">
-        <input
-          type="submit"
-          class="submit formElement"
-          value="Calculer"
-          v-on:click="computeMultiplier"
-        >
-        <span
-          class="result"
-          v-show="multiplier"
-        >Résultat: {{ parseFloat(this.multiplier).toFixed(2) }}</span>
-      </div>
+      <transition name="fade">
+        <div class="panel is-vertical-center" v-show="multiplierPanel">
+          <span>Prix de vente net</span>
+          <input type="text" class="formElement" v-model="operatingSellPrice">
+          <span>Prix d'achat net</span>
+          <input type="text" class="formElement" v-model="operatingPurchasePrice">
+          <input
+            type="submit"
+            class="submit formElement"
+            value="Calculer"
+            v-on:click="computeMultiplier"
+          >
+          <span
+            class="result"
+            v-show="multiplier"
+          >Résultat: {{ parseFloat(this.multiplier).toFixed(2) }}</span>
+        </div>
+      </transition>
     </div>
   </section>
 </template>
@@ -150,6 +158,12 @@ export default {
   flex-direction: column;
   overflow: hidden;
   justify-content: center;
-  transition: 0.5s;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 </style>
