@@ -1,0 +1,18 @@
+{
+  "pharmacies": [
+    {
+      "id": "pharma1",
+      "latitude": 47.213873,
+      "longitude": -1.5492075,
+      "title": "Pharmacy 1",
+      "snippet": "Une description"
+    },
+    {
+      "id": "pharma2",
+      "latitude": 47.213975,
+      "longitude": -1.5493077,
+      "title": "Pharmacy 2",
+      "snippet": "Une autre description"
+    }
+  ]
+}

@@ -3,6 +3,7 @@
     <div class="hero-body">
       <div id="map_canvas">
         <button class="button" v-on:click="centerCamera">Recentrer</button>
+        <button class="button" v-on:click="updatePharmacy">Modifier</button>
       </div>
     </div>
   </section>
@@ -11,13 +12,16 @@
 <script>
 import Vue from "vue";
 import { setTimeout } from "timers";
+import { fetcher } from "@/api/fetcher";
+import * as pharmaciesMock from "@/mock/pharmacies.json";
 export default {
   name: "Home",
   data() {
     return {
       circle: undefined,
       map: undefined,
-      pharmacies: []
+      pharmacies: [],
+      lastClickedMarker: undefined
     };
   },
   methods: {
@@ -38,14 +42,29 @@ export default {
       });
     },
     addPharmacy(pharmacy) {
-      // // Add a maker
+      // Add a maker
       const marker = this.map.addMarker({
         position: { lat: pharmacy.latitude, lng: pharmacy.longitude },
         title: pharmacy.title,
-        snippet: pharmacy.snippet,
+        snippet: `<p>${pharmacy.snippet}</p>`,
         animation: plugin.google.maps.Animation.BOUNCE
       });
+      marker.on(plugin.google.maps.event.MARKER_CLICK, () => {
+        this.lastClickedMarker = pharmacy.id;
+        console.log("marker clicked", this.lastClickedMarker);
+      });
       this.pharmacies.push(marker);
+    },
+    fetchPharmacies() {
+      return pharmaciesMock.pharmacies;
+      //return fetcher("/api/pharmacies", "token");
+    },
+    updatePharmacy() {
+      if (!this.lastClickedMarker) {
+        console.error("Error: no marker selected");
+        return;
+      }
+      this.$router.push({ path: `/pharmacy/${this.lastClickedMarker}` });
     }
   },
   mounted() {
@@ -102,13 +121,15 @@ export default {
           geolocationError,
           { enableHighAccuracy: true, timeout: 30000 }
         );
-        this.addPharmacy({
-          latitude: 47.213773,
-          longitude: -1.5491075,
-          title: "test title",
-          snippet: "test snippet"
-        });
+        // this.addPharmacy({
+        //   latitude: 47.213773,
+        //   longitude: -1.5491075,
+        //   title: "test title",
+        //   snippet: "test snippet"
+        // });
         setTimeout(this.centerCamera, 5000);
+        console.log(this.fetchPharmacies());
+        this.fetchPharmacies().map(pharmacy => this.addPharmacy(pharmacy));
       }.bind(vue),
       false
     );
