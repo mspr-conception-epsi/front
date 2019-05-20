@@ -4,6 +4,7 @@ import Home from "../views/Home";
 import Compute from "../views/Compute";
 import Login from "../views/Login";
 import UpdatePharmacy from "../views/UpdatePharmacy";
+import ProductList from "../views/ProductList";
 
 Vue.use(Router);
 
@@ -28,6 +29,11 @@ export default new Router({
       path: "/pharmacy/:phamacyId",
       name: "UpdatePharmacy",
       component: UpdatePharmacy
+    },
+    {
+      path: "/product-list",
+      name: "ProductList",
+      component: ProductList
     }
   ]
 });
