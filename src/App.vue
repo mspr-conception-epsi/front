@@ -25,9 +25,6 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-primary" @click="onRegisterClick">
-                <strong>Inscription</strong>
-              </a>
               <a class="button is-light" @click="onLoginClick">Connexion</a>
             </div>
           </div>
@@ -74,9 +71,6 @@ export default {
     },
     onLoginClick() {
       this.$router.push({ path: "/login" });
-    },
-    onRegisterClick() {
-      //this.$router.push({ path: "/register" });
     }
   }
 };
