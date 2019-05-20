@@ -20,6 +20,8 @@
           <a class="navbar-item" @click="onHomeClick">Accueil</a>
 
           <a class="navbar-item" @click="onComputeClick">Calculette</a>
+          <a class="navbar-item" @click="onProductsClick">Produits</a>
+          <a class="navbar-item" @click="onTrainingsClick">Formations</a>
         </div>
 
         <div class="navbar-end">
@@ -71,6 +73,12 @@ export default {
     },
     onLoginClick() {
       this.$router.push({ path: "/login" });
+    },
+    onProductsClick() {
+      this.$router.push({ path: "/products" });
+    },
+    onTrainingsClick() {
+      this.$router.push({ path: "/trainings" });
     }
   }
 };

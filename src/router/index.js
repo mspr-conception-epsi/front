@@ -6,6 +6,8 @@ import Login from "../views/Login";
 import UpdatePharmacy from "../views/UpdatePharmacy";
 import ProductList from "../views/ProductList";
 import Product from "../views/Product";
+import TrainingList from "../views/TrainingList";
+import Training from "../views/Training";
 
 Vue.use(Router);
 
@@ -32,7 +34,7 @@ export default new Router({
       component: UpdatePharmacy
     },
     {
-      path: "/product-list",
+      path: "/products",
       name: "ProductList",
       component: ProductList
     },
@@ -40,6 +42,16 @@ export default new Router({
       path: "/product/:id",
       name: "Product",
       component: Product
+    },
+    {
+      path: "/trainings",
+      name: "TrainingList",
+      component: TrainingList
+    },
+    {
+      path: "/training/:id",
+      name: "Training",
+      component: Training
     }
   ]
 });

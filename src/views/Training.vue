@@ -1,25 +1,25 @@
 <template>
   <div class="container">
-    <h1 class="title is-text-align-center form-element">Description du produit</h1>
+    <h1 class="title is-text-align-center form-element">Description de la formation</h1>
     <article class="message">
       <div class="message-header">
-        <p>{{ product.name }}</p>
+        <p>{{ training.name }}</p>
       </div>
-      <div class="message-body">{{ product.description }}</div>
+      <div class="message-body">{{ training.description }}</div>
     </article>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Product",
+  name: "Training",
   data() {
     return {
-      product: {
+      training: {
         id: 1,
-        name: "Aspirine",
-        description: "C'est de l'aspirine quoi",
-        price: 10.5
+        name: "Formation au risques",
+        description: "J'ai aucune idée du résultat par contre",
+        price: 1000
       },
       id: undefined
     };
