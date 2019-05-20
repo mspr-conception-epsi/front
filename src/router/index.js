@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Home from "../views/Home";
 import Compute from "../views/Compute";
 import Login from "../views/Login";
+import UpdatePharmacy from "../views/UpdatePharmacy";
 
 Vue.use(Router);
 
@@ -22,6 +23,11 @@ export default new Router({
       path: "/login",
       name: "Login",
       component: Login
+    },
+    {
+      path: "/updatePharmacy",
+      name: "UpdatePharmacy",
+      component: UpdatePharmacy
     }
   ]
 });
