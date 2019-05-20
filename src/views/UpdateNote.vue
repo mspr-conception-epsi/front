@@ -3,11 +3,11 @@
     <div class="container">
       <h1 class="title is-text-align-center">Ajout/Modification d'un commentaire</h1>
       <h2 class="title is-text-align-center">Nom de la Pharmacie : Le nom sera affiché ici</h2>
-      <div id="closeMe" class="notification is-danger" v-if="errors.length">
+      <div id="closeMe" class="notification is-danger" v-if="errors.length && displayErrors">
         <button class="delete" @click="closeBlock"></button>
-        <b>Corriger les erreurs suivantes :</b>
+        <b>Corrigez les erreurs suivantes :</b>
         <ul>
-          <li v-for="error in errors" :key="error.message">{{ error }}</li>
+          <li v-for="error in errors" :key="error.message">{{ error.message }}</li>
         </ul>
       </div>
 
@@ -44,6 +44,7 @@ export default {
       ],
       info: undefined,
       note: undefined,
+      displayErrors: undefined,
       pharmacyId: undefined
     };
   },
