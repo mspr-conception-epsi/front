@@ -26,6 +26,17 @@
         type="text"
         name="adress"
       >
+      <input class="button" type="button" @click="addressToLatLong" value="Vérifier l'adresse">
+      <div class="notification is-primary" v-if="addressOk">
+        <button class="delete" @click="addressOk=false"></button>
+        <p>Addresse valide</p>
+        <p>Lattitude: {{ this.lattitude }}</p>
+        <p>Longitude: {{ this.longitude }}</p>
+      </div>
+      <div class="notification is-danger" v-if="addressError">
+        <button class="delete" @click="addressError=false"></button>
+        Addresse non valide ou erreur
+      </div>
 
       <label class="label" for="lattitude">Lattitude</label>
       <input
@@ -58,17 +69,21 @@ export default {
     return {
       errors: [],
       name: undefined,
-      adress: undefined,
+      address: undefined,
       lattitude: undefined,
       longitude: undefined,
       pharmacyId: undefined,
       displayErrors: undefined,
-      id: undefined
+      id: undefined,
+      addressError: undefined,
+      addressOk: undefined,
+      deviceRdy: undefined,
+      awaitingAddress: undefined
     };
   },
   methods: {
     checkForm() {
-      if (this.name && this.adress && this.longitude && this.lattitude) {
+      if (this.name && this.address && this.longitude && this.lattitude) {
         return true;
       }
 
@@ -100,6 +115,24 @@ export default {
     submitForm() {
       this.checkForm();
       console.log("form is submitted");
+    },
+    addressToLatLong() {
+      if (!this.deviceRdy) {
+        return;
+      }
+      plugin.google.maps.Geocoder.geocode(
+        {
+          address: this.address
+        },
+        results => {
+          if (results.length) {
+            console.log(results);
+          } else {
+            console.log(results);
+            this.addressError = true;
+          }
+        }
+      );
     }
   },
   mounted() {
@@ -107,6 +140,15 @@ export default {
     if (!this.id || this.id === "") {
       console.error("no id provided");
     }
+    document.addEventListener("deviceready", () => {
+      this.deviceRdy = true;
+      console.log("device rdy");
+      if (this.awaitingAddress) {
+        this.address = this.awaitingAddress;
+        this.awaitingAddress = undefined;
+        this.addressToLatLong();
+      }
+    });
   }
 };
 </script>
