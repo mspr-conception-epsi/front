@@ -5,6 +5,7 @@ import Compute from "../views/Compute";
 import Login from "../views/Login";
 import UpdatePharmacy from "../views/UpdatePharmacy";
 import ProductList from "../views/ProductList";
+import Product from "../views/Product";
 
 Vue.use(Router);
 
@@ -34,6 +35,11 @@ export default new Router({
       path: "/product-list",
       name: "ProductList",
       component: ProductList
+    },
+    {
+      path: "/product/:id",
+      name: "Product",
+      component: Product
     }
   ]
 });
