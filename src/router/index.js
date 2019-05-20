@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "../views/Home";
 import Compute from "../views/Compute";
-import Form from "../views/Form";
+import UpdatePharmacy from "../views/UpdatePharmacy";
 
 Vue.use(Router);
 
@@ -19,9 +19,9 @@ export default new Router({
       component: Compute
     },
     {
-      path: "/form",
-      name: "Form",
-      component: Form
+      path: "/updatePharmacy",
+      name: "UpdatePharmacy",
+      component: UpdatePharmacy
     }
   ]
 });
