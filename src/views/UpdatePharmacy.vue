@@ -62,7 +62,8 @@ export default {
       lattitude: undefined,
       longitude: undefined,
       pharmacyId: undefined,
-      displayErrors: undefined
+      displayErrors: undefined,
+      id: undefined
     };
   },
   methods: {
@@ -99,6 +100,12 @@ export default {
     submitForm() {
       this.checkForm();
       console.log("form is submitted");
+    }
+  },
+  mounted() {
+    this.id = this.$route.params.id;
+    if (!this.id || this.id === "") {
+      console.error("no id provided");
     }
   }
 };
