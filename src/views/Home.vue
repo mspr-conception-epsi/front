@@ -44,7 +44,7 @@ export default {
       const marker = this.map.addMarker({
         position: { lat: pharmacy.latitude, lng: pharmacy.longitude },
         title: pharmacy.title,
-        snippet: `<p>${pharmacy.snippet}</p>`,
+        snippet: `${pharmacy.snippet}`,
         animation: plugin.google.maps.Animation.BOUNCE
       });
       marker.on(plugin.google.maps.event.MARKER_CLICK, () => {
@@ -72,8 +72,8 @@ export default {
       function() {
         plugin.google.maps.environment.setEnv({
           API_KEY_FOR_BROWSER_RELEASE:
-            "AIzaSyBARLnrLzvMAnihYcOBuEhx37ACvZHqnew",
-          API_KEY_FOR_BROWSER_DEBUG: "AIzaSyBtxY_260XDTYJA5yXj2rusPp_RhvrfdqA"
+            "AIzaSyB_xmGOewokh_VPpITnIoLw7Vd0QPxJ3Kc",
+          API_KEY_FOR_BROWSER_DEBUG: "AIzaSyBR7F4RTHTgH9gSZ6RlFtgJZsnfJSNEDJY"
         });
         const div = document.getElementById("map_canvas");
 
