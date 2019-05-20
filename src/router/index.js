@@ -25,7 +25,7 @@ export default new Router({
       component: Login
     },
     {
-      path: "/updatePharmacy",
+      path: "/pharmacy/:phamacyId",
       name: "UpdatePharmacy",
       component: UpdatePharmacy
     }
