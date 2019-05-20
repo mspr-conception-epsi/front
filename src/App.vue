@@ -25,10 +25,10 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-primary">
+              <a class="button is-primary" @click="onRegisterClick">
                 <strong>Inscription</strong>
               </a>
-              <a class="button is-light">Connexion</a>
+              <a class="button is-light" @click="onLoginClick">Connexion</a>
             </div>
           </div>
         </div>
@@ -71,6 +71,12 @@ export default {
     },
     onComputeClick() {
       this.$router.push({ path: "/compute" });
+    },
+    onLoginClick() {
+      this.$router.push({ path: "/login" });
+    },
+    onRegisterClick() {
+      //this.$router.push({ path: "/register" });
     }
   }
 };

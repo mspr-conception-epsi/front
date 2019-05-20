@@ -10,7 +10,6 @@
 </template>
 
 <script>
-import Vue from "vue";
 import { setTimeout } from "timers";
 import { fetcher } from "@/api/fetcher";
 import * as pharmaciesMock from "@/mock/pharmacies.json";
@@ -42,7 +41,6 @@ export default {
       });
     },
     addPharmacy(pharmacy) {
-      // Add a maker
       const marker = this.map.addMarker({
         position: { lat: pharmacy.latitude, lng: pharmacy.longitude },
         title: pharmacy.title,
@@ -82,18 +80,6 @@ export default {
         // Create a Google Maps native view under the map_canvas div.
         this.map = plugin.google.maps.Map.getMap(div);
 
-        // // Add a maker
-        // const marker = map.addMarker({
-        //   position: { lat: 37.422359, lng: -122.084344 },
-        //   title:
-        //     "Welecome to \n" + "Cordova GoogleMaps plugin for iOS and Android",
-        //   snippet: "This plugin is awesome!",
-        //   animation: plugin.google.maps.Animation.BOUNCE
-        // });
-
-        // Show the info window
-        //marker.showInfoWindow();
-
         const geolocationSuccess = pos => {
           this.updatePos(pos);
           if (this.circle) {
@@ -109,7 +95,6 @@ export default {
             strokeWidth: 0.5,
             fillColor: "#880000"
           });
-          console.log(pos);
         };
 
         const geolocationError = error => {
@@ -121,14 +106,8 @@ export default {
           geolocationError,
           { enableHighAccuracy: true, timeout: 30000 }
         );
-        // this.addPharmacy({
-        //   latitude: 47.213773,
-        //   longitude: -1.5491075,
-        //   title: "test title",
-        //   snippet: "test snippet"
-        // });
+
         setTimeout(this.centerCamera, 5000);
-        console.log(this.fetchPharmacies());
         this.fetchPharmacies().map(pharmacy => this.addPharmacy(pharmacy));
       }.bind(vue),
       false
