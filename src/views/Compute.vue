@@ -6,9 +6,9 @@
       <transition name="fade">
         <div class="panel is-vertical-center" v-show="discountRatePanel">
           <span>Prix d'achat net</span>
-          <input type="text" class="formElement" v-model="operatingPurchasePrice">
+          <input type="text" class="formElement input" v-model="operatingPurchasePrice">
           <span>Prix d'achat brut</span>
-          <input type="text" class="formElement" v-model="grossPurchasePrice">
+          <input type="text" class="formElement input" v-model="grossPurchasePrice">
           <input
             type="submit"
             class="submit formElement"
@@ -28,9 +28,9 @@
       <transition name="fade">
         <div class="panel is-vertical-center" v-show="operatingPurchasePricePanel">
           <span>Prix d'achat brut</span>
-          <input type="text" class="formElement" v-model="grossPurchasePrice">
+          <input type="text" class="formElement input" v-model="grossPurchasePrice">
           <span>Taux de remise</span>
-          <input type="text" class="formElement" v-model="discountRate">
+          <input type="text" class="formElement input" v-model="discountRate">
           <input
             type="submit"
             class="submit formElement"
@@ -50,9 +50,9 @@
       <transition name="fade">
         <div class="panel is-vertical-center" v-show="operatingSellPricePanel">
           <span>Prix d'achat net</span>
-          <input type="text" class="formElement" v-model="operatingPurchasePrice">
+          <input type="text" class="formElement input" v-model="operatingPurchasePrice">
           <span>Coefficient multiplicateur</span>
-          <input type="text" class="formElement" v-model="multiplier">
+          <input type="text" class="formElement input" v-model="multiplier">
           <input
             type="submit"
             class="submit formElement"
@@ -72,9 +72,9 @@
       <transition name="fade">
         <div class="panel is-vertical-center" v-show="multiplierPanel">
           <span>Prix de vente net</span>
-          <input type="text" class="formElement" v-model="operatingSellPrice">
+          <input type="text" class="formElement input" v-model="operatingSellPrice">
           <span>Prix d'achat net</span>
-          <input type="text" class="formElement" v-model="operatingPurchasePrice">
+          <input type="text" class="formElement input" v-model="operatingPurchasePrice">
           <input
             type="submit"
             class="submit formElement"
