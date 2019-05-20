@@ -2,11 +2,11 @@
   <section class="section">
     <div class="container">
       <h1 class="title is-text-align-center">Ajout/Modification d'une Pharmacie</h1>
-      <div id="closeMe" class="notification is-danger" v-if="errors.length">
+      <div id="closeMe" class="notification is-danger" v-if="errors.length && displayErrors">
         <button class="delete" @click="closeBlock"></button>
-        <b>Corriger les erreurs suivantes :</b>
+        <b>Corrigez les erreurs suivantes :</b>
         <ul>
-          <li v-for="error in errors" :key="error.message">{{ error }}</li>
+          <li v-for="error in errors" :key="error.message">{{ error.message }}</li>
         </ul>
       </div>
       <label class="label" for="name">Nom de la Pharmacie</label>
@@ -61,11 +61,12 @@ export default {
       adress: undefined,
       lattitude: undefined,
       longitude: undefined,
-      pharmacyId: undefined
+      pharmacyId: undefined,
+      displayErrors: undefined
     };
   },
   methods: {
-    checkForm: function(e) {
+    checkForm() {
       if (this.name && this.adress && this.longitude && this.lattitude) {
         return true;
       }
@@ -76,7 +77,7 @@ export default {
         this.errors.push({ message: "Le nom de la Pharmacie est requis." });
       }
       if (!this.adress) {
-        this.errors.push({ message: "L adresse de la Pharmacie est requise." });
+        this.errors.push({ message: "L'adresse de la Pharmacie est requise." });
       }
       if (!this.lattitude) {
         this.errors.push({
@@ -88,13 +89,15 @@ export default {
           message: "La longitude de la Pharmacie est requise."
         });
       }
-
-      e.preventDefault();
+      if (this.errors.length > 0) {
+        this.displayErrors = true;
+      }
     },
     closeBlock() {
-      document.getElementById(closeMe).style.display = none;
+      this.displayErrors = false;
     },
     submitForm() {
+      this.checkForm();
       console.log("form is submitted");
     }
   }
