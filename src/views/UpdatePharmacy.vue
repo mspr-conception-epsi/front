@@ -1,7 +1,7 @@
 <template>
   <section class="section">
-    <div class="container">
-      <h1 class="title is-text-align-center">Ajout/Modification d'une Pharmacie</h1>
+    <div class="box">
+      <h1 class="title is-text-align-center">Update d'une Pharmacie</h1>
       <div id="closeMe" class="notification is-danger" v-if="errors.length && displayErrors">
         <button class="delete" @click="closeBlock"></button>
         <b>Corrigez les erreurs suivantes :</b>
@@ -26,6 +26,7 @@
         type="text"
         name="adress"
       >
+      <br>
       <input class="button" type="button" @click="addressToLatLong" value="Vérifier l'adresse">
       <div class="notification is-primary" v-if="addressOk">
         <button class="delete" @click="addressOk=false"></button>
@@ -57,7 +58,7 @@
         name="longitude"
         disabled
       >
-
+      <br>
       <input class="button is-link" type="submit" value="Valider" @click="submitForm">
     </div>
   </section>
@@ -162,5 +163,9 @@ export default {
 .is-vertical-center {
   display: flex;
   align-items: center;
+}
+.box {
+  margin: 0 auto;
+  max-width: 600px;
 }
 </style>

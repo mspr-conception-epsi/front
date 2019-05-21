@@ -1,6 +1,6 @@
 <template>
   <section class="section">
-    <div class="container">
+    <div class="box">
       <h1 class="title is-text-align-center form-element">Connexion</h1>
       <p>Nom d'utilisateur</p>
       <input type="text" class="input form-element" v-model="login">
@@ -31,5 +31,9 @@ export default {
 <style scoped>
 .formElement {
   max-width: 400px;
+}
+.box {
+  margin: 0 auto;
+  max-width: 600px;
 }
 </style>
