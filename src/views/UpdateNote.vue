@@ -1,13 +1,13 @@
 <template>
   <section class="section">
-    <div class="container">
-      <h1 class="title is-text-align-center">Ajout/Modification d'un commentaire</h1>
-      <h2 class="title is-text-align-center">Nom de la Pharmacie : Le nom sera affiché ici</h2>
-      <div id="closeMe" class="notification is-danger" v-if="errors.length">
+    <div class="box">
+      <h1 class="title is-text-align-center">Update d'un commentaire</h1>
+      <h2 class="title is-text-align-center">Nom de la Pharmacie</h2>
+      <div id="closeMe" class="notification is-danger" v-if="errors.length && displayErrors">
         <button class="delete" @click="closeBlock"></button>
-        <b>Corriger les erreurs suivantes :</b>
+        <b>Corrigez les erreurs suivantes :</b>
         <ul>
-          <li v-for="error in errors" :key="error.message">{{ error }}</li>
+          <li v-for="error in errors" :key="error.message">{{ error.message }}</li>
         </ul>
       </div>
 
@@ -21,11 +21,7 @@
       </select>
 
       <label class="label" for="note">Note</label>
-      <textarea
-        class="input is-text-align-center formElement"
-        v-model="note"
-        placeholder="add multiple lines"
-      ></textarea>
+      <textarea class="textarea" v-model="note" placeholder="add multiple lines"></textarea>
       <br>
       <input class="button is-link" type="submit" value="Valider" @click="submitForm">
     </div>
@@ -44,6 +40,7 @@ export default {
       ],
       info: undefined,
       note: undefined,
+      displayErrors: undefined,
       pharmacyId: undefined
     };
   },
@@ -93,5 +90,9 @@ export default {
 .is-vertical-center {
   display: flex;
   align-items: center;
+}
+.box {
+  margin: 0 auto;
+  max-width: 600px;
 }
 </style>
