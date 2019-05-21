@@ -24,7 +24,7 @@
           <a class="navbar-item" @click="onTrainingsClick">Formations</a>
         </div>
 
-        <div class="navbar-end">
+        <div class="navbar-end" v-if="!$store.state.token">
           <div class="navbar-item">
             <div class="buttons">
               <a class="button is-light" @click="onLoginClick">Connexion</a>

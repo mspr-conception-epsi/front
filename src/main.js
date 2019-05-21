@@ -17,12 +17,16 @@ const store = new Vuex.Store({
     position: {
       latitude: 0,
       longitude: 0
-    }
+    },
+    token: undefined
   },
   mutations: {
     updatePosition(state, pos) {
       state.position.latitude = pos.latitude;
       state.position.longitude = pos.longitude;
+    },
+    setToken(state, token) {
+      state.token = token;
     }
   }
 });
