@@ -3,7 +3,7 @@
     <h1 class="title is-text-align-center form-element">Description de la formation</h1>
     <article class="message" v-if="training">
       <div class="message-header">
-        <p>{{ training.name }}</p>
+        <p>{{ training.title }}</p>
       </div>
       <div class="message-body">{{ training.description }}</div>
     </article>

@@ -9,7 +9,7 @@
         <th>Calculatrice</th>
       </tr>
       <tr v-for="training in trainings" :key="training.id">
-        <td>{{ training.name }}</td>
+        <td>{{ training.title }}</td>
         <td>{{ training.price }} €</td>
         <td>
           <button class="button" @click="onDescriptionClick(training.id)">Info</button>
@@ -28,7 +28,7 @@ export default {
   name: "TrainingList",
   data() {
     return {
-      trainings: undefined
+      trainings: []
     };
   },
   methods: {
