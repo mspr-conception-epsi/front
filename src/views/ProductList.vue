@@ -23,24 +23,12 @@
 </template>
 
 <script>
+import { fetchApi } from "@/api/fetcher";
 export default {
   name: "ProductList",
   data() {
     return {
-      products: [
-        {
-          id: 1,
-          name: "Aspirine",
-          description: "C'est de l'aspirine quoi",
-          price: 10.5
-        },
-        {
-          id: 2,
-          name: "Advil",
-          description: "C'est de l'aspirine quoi",
-          price: 10.5
-        }
-      ]
+      products: []
     };
   },
   methods: {
@@ -49,6 +37,36 @@ export default {
     },
     onComputeClick(id) {
       this.$router.push({ path: `/compute/${id}` });
+    },
+    async fetchProducts() {
+      if (!this.$store.state.token) {
+        return;
+      }
+      return await fetchApi("GET", "product", this.$store.state.token);
+    }
+  },
+  mounted() {
+    try {
+      this.fetchProducts().then(data => {
+        if (data) {
+          console.log(data);
+          data.map(product => {
+            if (this.products.find(p => p.id === product.id)) {
+              this.products.forEach(p => {
+                if (p.id === product.id) {
+                  p = product;
+                  this.$store.commit("setProduct", product);
+                }
+              });
+            } else {
+              this.products.push(product);
+              this.$store.commit("addProduct", product);
+            }
+          });
+        }
+      });
+    } catch (err) {
+      console.error(err);
     }
   }
 };

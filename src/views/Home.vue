@@ -54,13 +54,13 @@ export default {
         this.pharmacies.forEach(row => {
           if (row.id === this.id) {
             row = pharmacy;
-            this.$state.commit("addPharmacy", pharmacy);
+            this.$store.commit("addPharmacy", pharmacy);
             return;
           }
         });
       } else {
         this.pharmacies.push(pharmacy);
-        this.$state.commit("setPharmacy", pharmacy);
+        this.$store.commit("setPharmacy", pharmacy);
       }
     },
     async fetchPharmacies() {
@@ -80,6 +80,7 @@ export default {
   mounted() {
     if (!this.$store.state.token) {
       this.$router.push({ path: `/login` });
+      return;
     }
     const vue = this;
     document.addEventListener(
