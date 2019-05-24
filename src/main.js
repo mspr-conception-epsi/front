@@ -20,7 +20,8 @@ const store = new Vuex.Store({
     },
     token: undefined,
     pharmacies: [],
-    products: []
+    products: [],
+    trainings: []
   },
   mutations: {
     updatePosition(state, pos) {
@@ -53,6 +54,18 @@ const store = new Vuex.Store({
     },
     addProduct(state, product) {
       state.products.push(product);
+    },
+    setTraining(state, training) {
+      if (state.trainings.find(row => row.id === training.id)) {
+        state.trainings.forEach(row => {
+          if (row.id === training.id) {
+            row = training;
+          }
+        });
+      }
+    },
+    addTraining(state, training) {
+      state.trainings.push(training);
     }
   }
 });

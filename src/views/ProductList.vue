@@ -49,7 +49,6 @@ export default {
     try {
       this.fetchProducts().then(data => {
         if (data) {
-          console.log(data);
           data.map(product => {
             if (this.products.find(p => p.id === product.id)) {
               this.products.forEach(p => {

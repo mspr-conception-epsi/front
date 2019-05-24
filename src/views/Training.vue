@@ -1,11 +1,17 @@
 <template>
   <div class="container">
     <h1 class="title is-text-align-center form-element">Description de la formation</h1>
-    <article class="message">
+    <article class="message" v-if="training">
       <div class="message-header">
         <p>{{ training.name }}</p>
       </div>
       <div class="message-body">{{ training.description }}</div>
+    </article>
+    <article class="message" v-else>
+      <div class="message-header">
+        <p>Formation non trouvé</p>
+      </div>
+      <div class="message-body">Veuillez contacter le support</div>
     </article>
   </div>
 </template>
@@ -15,12 +21,7 @@ export default {
   name: "Training",
   data() {
     return {
-      training: {
-        id: 1,
-        name: "Formation au risques",
-        description: "J'ai aucune idée du résultat par contre",
-        price: 1000
-      },
+      training: undefined,
       id: undefined
     };
   },
@@ -29,6 +30,11 @@ export default {
     if (!this.id || this.id === "") {
       console.error("no id provided");
     }
+    if (this.$store.state.trainings.length <= 0) {
+      //fetch from sqli or api
+      console.error("no training in store");
+    }
+    this.training = this.$store.state.trainings.find(row => row.id == this.id);
   }
 };
 </script>

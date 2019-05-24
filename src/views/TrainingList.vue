@@ -23,24 +23,12 @@
 </template>
 
 <script>
+import { fetchApi } from "@/api/fetcher";
 export default {
   name: "TrainingList",
   data() {
     return {
-      trainings: [
-        {
-          id: 1,
-          name: "Formation au risques",
-          description: "J'ai aucune idée du résultat par contre",
-          price: 1000
-        },
-        {
-          id: 2,
-          name: "Formation à la vente d'aspirine",
-          description: "Pour les pharmaciens gitans",
-          price: 1500
-        }
-      ]
+      trainings: undefined
     };
   },
   methods: {
@@ -49,6 +37,36 @@ export default {
     },
     onComputeClick(id) {
       this.$router.push({ path: `/compute/${id}` });
+    },
+    async fetchTrainings() {
+      if (!this.$store.state.token) {
+        return;
+      }
+      return await fetchApi("GET", "formation", this.$store.state.token);
+    }
+  },
+  mounted() {
+    try {
+      this.fetchTrainings().then(data => {
+        if (data) {
+          console.log(data);
+          data.map(training => {
+            if (this.trainings.find(t => t.id === training.id)) {
+              this.trainings.forEach(t => {
+                if (t.id === training.id) {
+                  t = training;
+                  this.$store.commit("setTraining", training);
+                }
+              });
+            } else {
+              this.trainings.push(training);
+              this.$store.commit("addTraining", training);
+            }
+          });
+        }
+      });
+    } catch (err) {
+      console.error(err);
     }
   }
 };
