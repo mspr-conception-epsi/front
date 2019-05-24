@@ -11,7 +11,7 @@
 
 <script>
 import { setTimeout } from "timers";
-import { fetcher } from "@/api/fetcher";
+import { fetchApi } from "@/api/fetcher";
 import * as pharmaciesMock from "@/mock/pharmacies.json";
 export default {
   name: "Home",
@@ -42,20 +42,32 @@ export default {
     },
     addPharmacy(pharmacy) {
       const marker = this.map.addMarker({
-        position: { lat: pharmacy.latitude, lng: pharmacy.longitude },
-        title: pharmacy.title,
-        snippet: `${pharmacy.snippet}`,
+        position: { lat: pharmacy.gpsLat, lng: pharmacy.gpsLong },
+        title: pharmacy.name,
         animation: plugin.google.maps.Animation.BOUNCE
       });
       marker.on(plugin.google.maps.event.MARKER_CLICK, () => {
         this.lastClickedMarker = pharmacy.id;
         console.log("marker clicked", this.lastClickedMarker);
       });
-      this.pharmacies.push(marker);
+      if (this.pharmacies.find(row => row.id === pharmacy.id)) {
+        this.pharmacies.forEach(row => {
+          if (row.id === this.id) {
+            row = pharmacy;
+            this.$state.commit("addPharmacy", pharmacy);
+            return;
+          }
+        });
+      } else {
+        this.pharmacies.push(pharmacy);
+        this.$state.commit("setPharmacy", pharmacy);
+      }
     },
-    fetchPharmacies() {
-      return pharmaciesMock.pharmacies;
-      //return fetcher("/api/pharmacies", "token");
+    async fetchPharmacies() {
+      if (!this.$store.state.token) {
+        return;
+      }
+      return await fetchApi("GET", "pharmacy", this.$store.state.token);
     },
     updatePharmacy() {
       if (!this.lastClickedMarker) {
@@ -66,6 +78,9 @@ export default {
     }
   },
   mounted() {
+    if (!this.$store.state.token) {
+      this.$router.push({ path: `/login` });
+    }
     const vue = this;
     document.addEventListener(
       "deviceready",
@@ -108,7 +123,16 @@ export default {
         );
 
         setTimeout(this.centerCamera, 5000);
-        this.fetchPharmacies().map(pharmacy => this.addPharmacy(pharmacy));
+        try {
+          this.fetchPharmacies().then(data => {
+            if (data) {
+              console.log(data);
+              data.map(pharmacy => this.addPharmacy(pharmacy));
+            }
+          });
+        } catch (err) {
+          console.error(err);
+        }
       }.bind(vue),
       false
     );
