@@ -24,12 +24,17 @@ const store = new Vuex.Store({
     trainings: []
   },
   mutations: {
+    restoreState(state) {
+      state = window.localStorage.get("state");
+    },
     updatePosition(state, pos) {
       state.position.latitude = pos.latitude;
       state.position.longitude = pos.longitude;
+      window.localStorage.setItem("state", state);
     },
     setToken(state, token) {
       state.token = token;
+      window.localStorage.setItem("state", state);
     },
     setPharmacy(state, pharmacy) {
       if (state.pharmacies.find(row => row.id === pharmacy.id)) {
@@ -39,9 +44,11 @@ const store = new Vuex.Store({
           }
         });
       }
+      window.localStorage.setItem("state", state);
     },
     addPharmacy(state, pharmacy) {
       state.pharmacies.push(pharmacy);
+      window.localStorage.setItem("state", state);
     },
     setProduct(state, product) {
       if (state.products.find(row => row.id === product.id)) {
@@ -51,9 +58,11 @@ const store = new Vuex.Store({
           }
         });
       }
+      window.localStorage.setItem("state", state);
     },
     addProduct(state, product) {
       state.products.push(product);
+      window.localStorage.setItem("state", state);
     },
     setTraining(state, training) {
       if (state.trainings.find(row => row.id === training.id)) {
@@ -63,9 +72,11 @@ const store = new Vuex.Store({
           }
         });
       }
+      window.localStorage.setItem("state", state);
     },
     addTraining(state, training) {
       state.trainings.push(training);
+      window.localStorage.setItem("state", state);
     }
   }
 });

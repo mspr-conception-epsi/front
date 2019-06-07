@@ -12,6 +12,7 @@
 <script>
 import { setTimeout } from "timers";
 import { fetchApi } from "@/api/fetcher";
+import { checkOffline } from "@/utils/utils";
 import * as pharmaciesMock from "@/mock/pharmacies.json";
 export default {
   name: "Home",
@@ -124,6 +125,10 @@ export default {
         );
 
         setTimeout(this.centerCamera, 5000);
+        if (checkOffline()) {
+          this.$store.commit("restoreState");
+          return;
+        }
         try {
           this.fetchPharmacies().then(data => {
             if (data) {

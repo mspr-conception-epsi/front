@@ -21,6 +21,7 @@
     "cordova-browser": "^6.0.0",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-googlemaps": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps.git#multiple_maps",
+    "cordova-plugin-network-information": "^2.0.1",
     "vue": "^2.5.2",
     "vue-cordova": "^0.1.2",
     "vue-material": "^1.0.0-beta-7",
@@ -93,11 +94,12 @@
     "plugins": {
       "cordova-plugin-whitelist": {},
       "cordova-plugin-geolocation": {},
-      "cordova-plugin-googlemaps": {}
+      "cordova-plugin-googlemaps": {},
+      "cordova-plugin-network-information": {}
     },
     "platforms": [
-      "android",
-      "browser"
+      "browser",
+      "android"
     ]
   }
 }
