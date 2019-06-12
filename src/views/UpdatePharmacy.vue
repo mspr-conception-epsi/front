@@ -64,7 +64,7 @@
   </section>
 </template>
 <script>
-import { checkOffline } from "@/utils/utils";
+//import { checkOffline } from "@/utils/utils";
 export default {
   name: "Form",
   data() {
@@ -121,19 +121,19 @@ export default {
       if (!this.deviceRdy) {
         return;
       }
-      plugin.google.maps.Geocoder.geocode(
-        {
-          address: this.address
-        },
-        results => {
-          if (results.length) {
-            console.log(results);
-          } else {
-            console.log(results);
-            this.addressError = true;
-          }
-        }
-      );
+      // plugin.google.maps.Geocoder.geocode(
+      //   {
+      //     address: this.address
+      //   },
+      //   results => {
+      //     if (results.length) {
+      //       console.log(results);
+      //     } else {
+      //       console.log(results);
+      //       this.addressError = true;
+      //     }
+      //   }
+      // );
     }
   },
   mounted() {
@@ -147,7 +147,7 @@ export default {
     }
     this.$store.commit("restoreState");
     const pharmacy = undefined;
-    this.$store.state.pharmacies.map(pharmacy => console.log(pharmacy))
+    this.$store.state.pharmacies.map(pharmacy => console.log(pharmacy));
     console.log(this.$store.state.pharmacies);
     this.name = pharmacy.name;
     // this.address = pharmacy // is this a thing ?

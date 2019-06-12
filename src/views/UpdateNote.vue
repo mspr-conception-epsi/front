@@ -45,7 +45,7 @@ export default {
     };
   },
   methods: {
-    checkForm: function(e) {
+    checkForm() {
       if (this.info && this.note) {
         return true;
       }

@@ -5,9 +5,7 @@ import Vuex from "vuex";
 import App from "./App";
 import router from "./router";
 import "bulma/css/bulma.css";
-import VueCordova from "vue-cordova";
 
-Vue.use(VueCordova);
 Vue.use(Vuex);
 
 Vue.config.productionTip = false;

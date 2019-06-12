@@ -10,10 +10,8 @@
 </template>
 
 <script>
-import { setTimeout } from "timers";
+//import { setTimeout } from "timers";
 import { fetchApi } from "@/api/fetcher";
-import { checkOffline } from "@/utils/utils";
-import * as pharmaciesMock from "@/mock/pharmacies.json";
 export default {
   name: "Home",
   data() {
@@ -42,15 +40,15 @@ export default {
       });
     },
     addPharmacy(pharmacy) {
-      const marker = this.map.addMarker({
-        position: { lat: pharmacy.gpsLat, lng: pharmacy.gpsLong },
-        title: pharmacy.name,
-        animation: plugin.google.maps.Animation.BOUNCE
-      });
-      marker.on(plugin.google.maps.event.MARKER_CLICK, () => {
-        this.lastClickedMarker = pharmacy.id;
-        console.log("marker clicked", this.lastClickedMarker);
-      });
+      // const marker = this.map.addMarker({
+      //   position: { lat: pharmacy.gpsLat, lng: pharmacy.gpsLong },
+      //   title: pharmacy.name,
+      //   animation: plugin.google.maps.Animation.BOUNCE
+      // });
+      // marker.on(plugin.google.maps.event.MARKER_CLICK, () => {
+      //   this.lastClickedMarker = pharmacy.id;
+      //   console.log("marker clicked", this.lastClickedMarker);
+      // });
       if (this.pharmacies.find(row => row.id === pharmacy.id)) {
         this.pharmacies.forEach(row => {
           if (row.id === this.id) {
@@ -87,48 +85,46 @@ export default {
     document.addEventListener(
       "deviceready",
       function() {
-        plugin.google.maps.environment.setEnv({
-          API_KEY_FOR_BROWSER_RELEASE:
-            "AIzaSyB_xmGOewokh_VPpITnIoLw7Vd0QPxJ3Kc",
-          API_KEY_FOR_BROWSER_DEBUG: "AIzaSyBR7F4RTHTgH9gSZ6RlFtgJZsnfJSNEDJY"
-        });
-        const div = document.getElementById("map_canvas");
+        // plugin.google.maps.environment.setEnv({
+        //   API_KEY_FOR_BROWSER_RELEASE:
+        //     "AIzaSyB_xmGOewokh_VPpITnIoLw7Vd0QPxJ3Kc",
+        //   API_KEY_FOR_BROWSER_DEBUG: "AIzaSyBR7F4RTHTgH9gSZ6RlFtgJZsnfJSNEDJY"
+        // });
+        // const div = document.getElementById("map_canvas");
 
-        // Create a Google Maps native view under the map_canvas div.
-        this.map = plugin.google.maps.Map.getMap(div);
+        // // Create a Google Maps native view under the map_canvas div.
+        // this.map = plugin.google.maps.Map.getMap(div);
 
-        const geolocationSuccess = pos => {
-          this.updatePos(pos);
-          if (this.circle) {
-            this.circle.remove();
-          }
-          this.circle = this.map.addCircle({
-            center: {
-              lat: this.$store.state.position.latitude,
-              lng: this.$store.state.position.longitude
-            },
-            radius: 5,
-            strokeColor: "#000000",
-            strokeWidth: 0.5,
-            fillColor: "#880000"
-          });
-        };
+        // const geolocationSuccess = pos => {
+        //   this.updatePos(pos);
+        //   if (this.circle) {
+        //     this.circle.remove();
+        //   }
+        //   this.circle = this.map.addCircle({
+        //     center: {
+        //       lat: this.$store.state.position.latitude,
+        //       lng: this.$store.state.position.longitude
+        //     },
+        //     radius: 5,
+        //     strokeColor: "#000000",
+        //     strokeWidth: 0.5,
+        //     fillColor: "#880000"
+        //   });
+        // };
 
-        const geolocationError = error => {
-          console.error("Geolocation error", error);
-        };
+        // const geolocationError = error => {
+        //   console.error("Geolocation error", error);
+        // };
 
-        const watchId = navigator.geolocation.watchPosition(
-          geolocationSuccess,
-          geolocationError,
-          { enableHighAccuracy: true, timeout: 30000 }
-        );
+        // const watchId = navigator.geolocation.watchPosition(
+        //   geolocationSuccess,
+        //   geolocationError,
+        //   { enableHighAccuracy: true, timeout: 30000 }
+        // );
 
-        setTimeout(this.centerCamera, 5000);
-        if (checkOffline()) {
-          this.$store.commit("restoreState");
-          return;
-        }
+        //setTimeout(this.centerCamera, 5000);
+        this.$store.commit("restoreState");
+
         try {
           this.fetchPharmacies().then(data => {
             if (data) {
