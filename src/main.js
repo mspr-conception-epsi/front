@@ -25,16 +25,17 @@ const store = new Vuex.Store({
   },
   mutations: {
     restoreState(state) {
-      state = window.localStorage.get("state");
+      state = JSON.parse(window.localStorage.getItem("state"));
+      console.log("restoring state", state);
     },
     updatePosition(state, pos) {
       state.position.latitude = pos.latitude;
       state.position.longitude = pos.longitude;
-      window.localStorage.setItem("state", state);
+      window.localStorage.setItem("state", JSON.stringify(state));
     },
     setToken(state, token) {
       state.token = token;
-      window.localStorage.setItem("state", state);
+      window.localStorage.setItem("state", JSON.stringify(state));
     },
     setPharmacy(state, pharmacy) {
       if (state.pharmacies.find(row => row.id === pharmacy.id)) {
@@ -44,11 +45,11 @@ const store = new Vuex.Store({
           }
         });
       }
-      window.localStorage.setItem("state", state);
+      window.localStorage.setItem("state", JSON.stringify(state));
     },
     addPharmacy(state, pharmacy) {
       state.pharmacies.push(pharmacy);
-      window.localStorage.setItem("state", state);
+      window.localStorage.setItem("state", JSON.stringify(state));
     },
     setProduct(state, product) {
       if (state.products.find(row => row.id === product.id)) {
@@ -58,11 +59,11 @@ const store = new Vuex.Store({
           }
         });
       }
-      window.localStorage.setItem("state", state);
+      window.localStorage.setItem("state", JSON.stringify(state));
     },
     addProduct(state, product) {
       state.products.push(product);
-      window.localStorage.setItem("state", state);
+      window.localStorage.setItem("state", JSON.stringify(state));
     },
     setTraining(state, training) {
       if (state.trainings.find(row => row.id === training.id)) {
@@ -72,11 +73,11 @@ const store = new Vuex.Store({
           }
         });
       }
-      window.localStorage.setItem("state", state);
+      window.localStorage.setItem("state", JSON.stringify(state));
     },
     addTraining(state, training) {
       state.trainings.push(training);
-      window.localStorage.setItem("state", state);
+      window.localStorage.setItem("state", JSON.stringify(state));
     }
   }
 });

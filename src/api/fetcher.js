@@ -7,7 +7,9 @@ export const fetchApi = async (method, url, token, args) => {
     url: `${BASE_URL}/${url}`,
     method: method,
     headers: {
-      authorization: `Bearer ${token}`
+      authorization: `Bearer ${token}`,
+      Accept: "application/json",
+      "Content-Type": "application/json; charset=utf-8"
     },
     data: JSON.stringify(args)
   });

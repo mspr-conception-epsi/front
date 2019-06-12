@@ -134,6 +134,7 @@ export default {
             if (data) {
               console.log(data);
               data.map(pharmacy => this.addPharmacy(pharmacy));
+              console.log(this.$store.state.pharmacies);
             }
           });
         } catch (err) {

@@ -90,8 +90,8 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
-apply from: "../cordova-plugin-googlemaps/MSPR_FRONT-tbxml-android.gradle"
-apply from: "../cordova-plugin-googlemaps/MSPR_FRONT-apikey.gradle"
+apply from: "../cordova-plugin-googlemaps/front-tbxml-android.gradle"
+apply from: "../cordova-plugin-googlemaps/front-apikey.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras1 = file('build-extras.gradle').exists()
@@ -271,6 +271,7 @@ dependencies {
     implementation "com.google.android.gms:play-services-maps:15.0.1"
     implementation "com.google.android.gms:play-services-location:15.0.1"
     implementation "com.android.support:support-core-utils:27.+"
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:3.10.0"
     // SUB-PROJECT DEPENDENCIES END
 }
 

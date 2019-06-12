@@ -36,15 +36,10 @@ export default {
         }
         return;
       }
-      auth(this.login, this.password)
-        .then(data => {
-          this.$store.commit("setToken", data.token);
-          this.$router.push({ path: "/" });
-        })
-        .catch(err => {
-          this.loginError = err;
-          console.error(err);
-        });
+      auth(this.login, this.password, data => {
+        this.$store.commit("setToken", data.token);
+        this.$router.push({ path: "/" });
+      });
     }
   }
 };

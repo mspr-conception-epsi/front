@@ -30,7 +30,7 @@ export default new Router({
       component: Login
     },
     {
-      path: "/pharmacy/:phamacyId",
+      path: "/pharmacy/:id",
       name: "UpdatePharmacy",
       component: UpdatePharmacy
     },

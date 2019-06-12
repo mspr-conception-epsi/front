@@ -64,6 +64,7 @@
   </section>
 </template>
 <script>
+import { checkOffline } from "@/utils/utils";
 export default {
   name: "Form",
   data() {
@@ -73,7 +74,6 @@ export default {
       address: undefined,
       lattitude: undefined,
       longitude: undefined,
-      pharmacyId: undefined,
       displayErrors: undefined,
       id: undefined,
       addressError: undefined,
@@ -140,10 +140,21 @@ export default {
     this.id = this.$route.params.id;
     if (!this.id || this.id === "") {
       console.error("no id provided");
+      this.errors.push({
+        message: "Nous ne pouvons pas trouver la pharmacie demandée"
+      });
+      return;
     }
+    this.$store.commit("restoreState");
+    const pharmacy = undefined;
+    this.$store.state.pharmacies.map(pharmacy => console.log(pharmacy))
+    console.log(this.$store.state.pharmacies);
+    this.name = pharmacy.name;
+    // this.address = pharmacy // is this a thing ?
+    this.lattitude = pharmacy.position.lattitude;
+    this.longitude = pharmacy.position.longitude;
     document.addEventListener("deviceready", () => {
       this.deviceRdy = true;
-      console.log("device rdy");
       if (this.awaitingAddress) {
         this.address = this.awaitingAddress;
         this.awaitingAddress = undefined;
