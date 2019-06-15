@@ -11,11 +11,12 @@ jobs:
       - deploy:
           name: Deploy app to Captain Rover
           command: caprover deploy -h $DOMAIN -p $PASSWORD -a $APPNAME
+
 workflows:
   version: 2
   deploy:
     jobs:
       - app-deploy:
-        filters:
-          branches:
-            only: master
+          filters:
+            branches:
+              only: master
