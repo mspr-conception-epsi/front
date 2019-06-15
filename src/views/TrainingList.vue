@@ -46,6 +46,23 @@ export default {
     }
   },
   mounted() {
+    if (!this.$store.state.token) {
+      const state = JSON.parse(window.localStorage.getItem("state"));
+      if (!state) {
+        this.$router.push({ path: `/login` });
+        return;
+      }
+      this.$store.commit("setToken", state.token);
+      state.pharmacies.map(pharmacy => {
+        this.$store.commit("addPharmacy", pharmacy);
+      });
+      state.products.map(product => {
+        this.$store.commit("addProduct", product);
+      });
+      state.trainings.map(training => {
+        this.$store.commit("addTraining", training);
+      });
+    }
     try {
       this.fetchTrainings().then(data => {
         if (data) {

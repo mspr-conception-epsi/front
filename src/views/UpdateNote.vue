@@ -79,6 +79,10 @@ export default {
     }
     if (!this.$store.state.token) {
       const state = JSON.parse(window.localStorage.getItem("state"));
+      if (!state) {
+        this.$router.push({ path: `/login` });
+        return;
+      }
       this.$store.commit("setToken", state.token);
       state.pharmacies.map(pharmacy => {
         this.$store.commit("addPharmacy", pharmacy);
@@ -89,10 +93,6 @@ export default {
       state.trainings.map(training => {
         this.$store.commit("addTraining", training);
       });
-      if (!this.$store.state.token) {
-        this.$router.push({ path: `/login` });
-        return;
-      }
     }
     const pharmacy = this.$store.state.pharmacies.find(
       p => p.id === Number(this.id)

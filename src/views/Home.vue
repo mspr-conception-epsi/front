@@ -96,8 +96,11 @@ export default {
   },
   mounted() {
     if (!this.$store.state.token) {
-      console.log("here");
       const state = JSON.parse(window.localStorage.getItem("state"));
+      if (!state) {
+        this.$router.push({ path: `/login` });
+        return;
+      }
       this.$store.commit("setToken", state.token);
       state.pharmacies.map(pharmacy => {
         this.$store.commit("addPharmacy", pharmacy);
@@ -108,12 +111,6 @@ export default {
       state.trainings.map(training => {
         this.$store.commit("addTraining", training);
       });
-      console.log(this.$store.state.token);
-      if (!this.$store.state.token) {
-        console.log("and here");
-        this.$router.push({ path: `/login` });
-        return;
-      }
     }
     this.geolocate();
     setInterval(() => {

@@ -30,6 +30,23 @@ export default {
     if (!this.id || this.id === "") {
       console.error("no id provided");
     }
+    if (!this.$store.state.token) {
+      const state = JSON.parse(window.localStorage.getItem("state"));
+      if (!state) {
+        this.$router.push({ path: `/login` });
+        return;
+      }
+      this.$store.commit("setToken", state.token);
+      state.pharmacies.map(pharmacy => {
+        this.$store.commit("addPharmacy", pharmacy);
+      });
+      state.products.map(product => {
+        this.$store.commit("addProduct", product);
+      });
+      state.trainings.map(training => {
+        this.$store.commit("addTraining", training);
+      });
+    }
     if (this.$store.state.trainings.length <= 0) {
       //fetch from sqli or api
       console.error("no training in store");
