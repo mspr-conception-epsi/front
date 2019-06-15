@@ -1,12 +1,23 @@
 <template>
   <section class="hero is-fullheight">
     <div class="hero-body">
+      <div class="pharmacy-description">
+        <p class="item">Pharmacie selectionnée: {{ selected ? selected.name : "" }}</p>
+        <button class="button item" @click="updatePharmacy()">Modifier</button>
+      </div>
       <gmap-map
         :center="$store.state.position"
         :zoom="19"
         style="width:100%;  height: 100%; min-height: 600px;"
       >
-        <gmap-marker :key="index" v-for="(m, index) in pharmacies" :position="m.position"></gmap-marker>
+        <gmap-marker
+          :key="index"
+          v-for="(m, index) in pharmacies"
+          :position="m.position"
+          @click="selected=m"
+        >
+          <GmapInfoWindow>{{ m.name }}</GmapInfoWindow>
+        </gmap-marker>
       </gmap-map>
     </div>
   </section>
@@ -20,7 +31,8 @@ export default {
     return {
       circle: undefined,
       pharmacies: [],
-      lastClickedMarker: undefined
+      lastClickedMarker: undefined,
+      selected: undefined
     };
   },
   methods: {
@@ -62,11 +74,11 @@ export default {
       return await fetchApi("GET", "pharmacy", this.$store.state.token);
     },
     updatePharmacy() {
-      if (!this.lastClickedMarker) {
+      if (!this.selected) {
         console.error("Error: no marker selected");
         return;
       }
-      this.$router.push({ path: `/pharmacy/${this.lastClickedMarker}` });
+      this.$router.push({ path: `/pharmacy/${this.selected.id}` });
     }
   },
   mounted() {
@@ -108,16 +120,20 @@ export default {
 </script>
 
 <style scoped>
-#map_canvas {
-  width: 100%;
-  height: 100%;
-  z-index: 200;
-  min-height: 600px;
-}
 canvas {
   display: block;
 }
 .hero-body {
+  display: flex;
+  flex-direction: column;
   padding: 0;
+}
+.pharmacy-description {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+}
+.pharmacy-description > .item {
+  padding: 0 1rem;
 }
 </style>
