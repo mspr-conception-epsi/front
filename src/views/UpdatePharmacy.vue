@@ -171,7 +171,7 @@ export default {
       return;
     }
     this.name = pharmacy.name;
-    this.address = pharmacy.address; // is this a thing ?
+    this.address = pharmacy.address;
     this.lattitude = pharmacy.position.lat;
     this.longitude = pharmacy.position.lng;
   }
