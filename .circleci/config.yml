@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  app-deploy:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - run:
+          name: Install Captain Rover CLI
+          command: sudo npm install -g caprover
+      - deploy:
+          name: Deploy app to Captain Rover
+          command: caprover deploy -h $DOMAIN -p $PASSWORD -a $APPNAME
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - app-deploy:
+        filters:
+          branches:
+            only: master
