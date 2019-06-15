@@ -46,14 +46,19 @@ export default {
       navigator.geolocation.getCurrentPosition(this.updatePos);
     },
     addPharmacy(pharmacy) {
-      if (this.pharmacies.find(row => row.id === pharmacy.id)) {
-        this.pharmacies.forEach(row => {
-          if (row.id === this.id) {
-            row = pharmacy;
-            this.$store.commit("addPharmacy", pharmacy);
-            return;
-          }
-        });
+      const p = this.pharmacies.find(row => row.id === pharmacy.id);
+      const pUpdated = {
+        id: pharmacy.id,
+        address: pharmacy.address,
+        name: pharmacy.name,
+        position: {
+          lat: pharmacy.gpsLat,
+          lng: pharmacy.gpsLong
+        }
+      };
+      if (p) {
+        this.$store.commit("setPharmacy", pUpdated);
+        return;
       } else {
         this.pharmacies.push({
           id: pharmacy.id,
@@ -64,7 +69,7 @@ export default {
             lng: pharmacy.gpsLong
           }
         });
-        this.$store.commit("setPharmacy", pharmacy);
+        this.$store.commit("addPharmacy", pUpdated);
       }
     },
     async fetchPharmacies() {
@@ -84,7 +89,6 @@ export default {
   mounted() {
     if (!this.$store.state.token) {
       const state = JSON.parse(window.localStorage.getItem("state"));
-      console.log("new state ", state);
       this.$store.commit("setToken", state.token);
       state.pharmacies.map(pharmacy => {
         this.$store.commit("addPharmacy", pharmacy);
@@ -95,7 +99,6 @@ export default {
       state.trainings.map(training => {
         this.$store.commit("addTraining", training);
       });
-      console.log("new state", this.$store.state);
       if (!this.$store.state.token) {
         this.$router.push({ path: `/login` });
         return;

@@ -18,16 +18,16 @@
         name="name"
       >
 
-      <label class="label" for="adress">Adresse</label>
+      <label class="label" for="address">addresse</label>
       <input
         class="input is-text-align-center formElement"
-        id="adress"
-        v-model="adress"
+        id="address"
+        v-model="address"
         type="text"
-        name="adress"
+        name="address"
       >
       <br>
-      <input class="button" type="button" @click="addressToLatLong" value="Vérifier l'adresse">
+      <input class="button" type="button" @click="addressToLatLong" value="Vérifier l'addresse">
       <div class="notification is-primary" v-if="addressOk">
         <button class="delete" @click="addressOk=false"></button>
         <p>Addresse valide</p>
@@ -93,8 +93,10 @@ export default {
       if (!this.name) {
         this.errors.push({ message: "Le nom de la Pharmacie est requis." });
       }
-      if (!this.adress) {
-        this.errors.push({ message: "L'adresse de la Pharmacie est requise." });
+      if (!this.address) {
+        this.errors.push({
+          message: "L'addresse de la Pharmacie est requise."
+        });
       }
       if (!this.lattitude) {
         this.errors.push({
@@ -145,22 +147,34 @@ export default {
       });
       return;
     }
-    this.$store.commit("restoreState");
-    const pharmacy = undefined;
-    this.$store.state.pharmacies.map(pharmacy => console.log(pharmacy));
-    console.log(this.$store.state.pharmacies);
-    this.name = pharmacy.name;
-    // this.address = pharmacy // is this a thing ?
-    this.lattitude = pharmacy.position.lattitude;
-    this.longitude = pharmacy.position.longitude;
-    document.addEventListener("deviceready", () => {
-      this.deviceRdy = true;
-      if (this.awaitingAddress) {
-        this.address = this.awaitingAddress;
-        this.awaitingAddress = undefined;
-        this.addressToLatLong();
+    if (!this.$store.state.token) {
+      const state = JSON.parse(window.localStorage.getItem("state"));
+      this.$store.commit("setToken", state.token);
+      state.pharmacies.map(pharmacy => {
+        this.$store.commit("addPharmacy", pharmacy);
+      });
+      state.products.map(product => {
+        this.$store.commit("addProduct", product);
+      });
+      state.trainings.map(training => {
+        this.$store.commit("addTraining", training);
+      });
+      if (!this.$store.state.token) {
+        this.$router.push({ path: `/login` });
+        return;
       }
-    });
+    }
+    const pharmacy = this.$store.state.pharmacies.find(
+      p => p.id === Number(this.id)
+    );
+    if (!pharmacy) {
+      console.error("no pharmacy found");
+      return;
+    }
+    this.name = pharmacy.name;
+    this.address = pharmacy.address; // is this a thing ?
+    this.lattitude = pharmacy.position.lat;
+    this.longitude = pharmacy.position.lng;
   }
 };
 </script>
