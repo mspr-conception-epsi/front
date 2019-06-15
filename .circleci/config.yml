@@ -10,7 +10,7 @@ jobs:
           command: sudo npm install -g caprover
       - deploy:
           name: Deploy app to Captain Rover
-          command: caprover deploy -h $DOMAIN -p $PASSWORD -a $APPNAME
+          command: caprover deploy -h $DOMAIN -p $PASSWORD -b master -a $APPNAME
 
 workflows:
   version: 2
