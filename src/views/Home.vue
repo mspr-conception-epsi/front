@@ -1,23 +1,24 @@
 <template>
   <section class="hero is-fullheight">
     <div class="hero-body">
-      <div id="map_canvas">
-        <button class="button" v-on:click="centerCamera">Recentrer</button>
-        <button class="button" v-on:click="updatePharmacy">Modifier</button>
-      </div>
+      <gmap-map
+        :center="$store.state.position"
+        :zoom="19"
+        style="width:100%;  height: 100%; min-height: 600px;"
+      >
+        <gmap-marker :key="index" v-for="(m, index) in pharmacies" :position="m.position"></gmap-marker>
+      </gmap-map>
     </div>
   </section>
 </template>
 
 <script>
-//import { setTimeout } from "timers";
 import { fetchApi } from "@/api/fetcher";
 export default {
   name: "Home",
   data() {
     return {
       circle: undefined,
-      map: undefined,
       pharmacies: [],
       lastClickedMarker: undefined
     };
@@ -29,26 +30,10 @@ export default {
         longitude: pos.coords.longitude
       });
     },
-    centerCamera() {
-      this.map.animateCamera({
-        target: {
-          lat: this.$store.state.position.latitude,
-          lng: this.$store.state.position.longitude
-        },
-        zoom: 19,
-        duration: 3000
-      });
+    geolocate() {
+      navigator.geolocation.getCurrentPosition(this.updatePos);
     },
     addPharmacy(pharmacy) {
-      // const marker = this.map.addMarker({
-      //   position: { lat: pharmacy.gpsLat, lng: pharmacy.gpsLong },
-      //   title: pharmacy.name,
-      //   animation: plugin.google.maps.Animation.BOUNCE
-      // });
-      // marker.on(plugin.google.maps.event.MARKER_CLICK, () => {
-      //   this.lastClickedMarker = pharmacy.id;
-      //   console.log("marker clicked", this.lastClickedMarker);
-      // });
       if (this.pharmacies.find(row => row.id === pharmacy.id)) {
         this.pharmacies.forEach(row => {
           if (row.id === this.id) {
@@ -58,7 +43,15 @@ export default {
           }
         });
       } else {
-        this.pharmacies.push(pharmacy);
+        this.pharmacies.push({
+          id: pharmacy.id,
+          address: pharmacy.address,
+          name: pharmacy.name,
+          position: {
+            lat: pharmacy.gpsLat,
+            lng: pharmacy.gpsLong
+          }
+        });
         this.$store.commit("setPharmacy", pharmacy);
       }
     },
@@ -78,67 +71,38 @@ export default {
   },
   mounted() {
     if (!this.$store.state.token) {
-      this.$router.push({ path: `/login` });
-      return;
+      const state = JSON.parse(window.localStorage.getItem("state"));
+      console.log("new state ", state);
+      this.$store.commit("setToken", state.token);
+      state.pharmacies.map(pharmacy => {
+        this.$store.commit("addPharmacy", pharmacy);
+      });
+      state.products.map(product => {
+        this.$store.commit("addProduct", product);
+      });
+      state.trainings.map(training => {
+        this.$store.commit("addTraining", training);
+      });
+      console.log("new state", this.$store.state);
+      if (!this.$store.state.token) {
+        this.$router.push({ path: `/login` });
+        return;
+      }
     }
-    const vue = this;
-    document.addEventListener(
-      "deviceready",
-      function() {
-        // plugin.google.maps.environment.setEnv({
-        //   API_KEY_FOR_BROWSER_RELEASE:
-        //     "AIzaSyB_xmGOewokh_VPpITnIoLw7Vd0QPxJ3Kc",
-        //   API_KEY_FOR_BROWSER_DEBUG: "AIzaSyBR7F4RTHTgH9gSZ6RlFtgJZsnfJSNEDJY"
-        // });
-        // const div = document.getElementById("map_canvas");
+    this.geolocate();
+    setInterval(() => {
+      this.geolocate();
+    }, 5000);
 
-        // // Create a Google Maps native view under the map_canvas div.
-        // this.map = plugin.google.maps.Map.getMap(div);
-
-        // const geolocationSuccess = pos => {
-        //   this.updatePos(pos);
-        //   if (this.circle) {
-        //     this.circle.remove();
-        //   }
-        //   this.circle = this.map.addCircle({
-        //     center: {
-        //       lat: this.$store.state.position.latitude,
-        //       lng: this.$store.state.position.longitude
-        //     },
-        //     radius: 5,
-        //     strokeColor: "#000000",
-        //     strokeWidth: 0.5,
-        //     fillColor: "#880000"
-        //   });
-        // };
-
-        // const geolocationError = error => {
-        //   console.error("Geolocation error", error);
-        // };
-
-        // const watchId = navigator.geolocation.watchPosition(
-        //   geolocationSuccess,
-        //   geolocationError,
-        //   { enableHighAccuracy: true, timeout: 30000 }
-        // );
-
-        //setTimeout(this.centerCamera, 5000);
-        this.$store.commit("restoreState");
-
-        try {
-          this.fetchPharmacies().then(data => {
-            if (data) {
-              console.log(data);
-              data.map(pharmacy => this.addPharmacy(pharmacy));
-              console.log(this.$store.state.pharmacies);
-            }
-          });
-        } catch (err) {
-          console.error(err);
+    try {
+      this.fetchPharmacies().then(data => {
+        if (data) {
+          data.map(pharmacy => this.addPharmacy(pharmacy));
         }
-      }.bind(vue),
-      false
-    );
+      });
+    } catch (err) {
+      console.error(err);
+    }
   }
 };
 </script>

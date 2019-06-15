@@ -5,7 +5,14 @@ import Vuex from "vuex";
 import App from "./App";
 import router from "./router";
 import "bulma/css/bulma.css";
+import * as VueGoogleMaps from "vue2-google-maps";
 
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyB_xmGOewokh_VPpITnIoLw7Vd0QPxJ3Kc",
+    libraries: "places" // necessary for places input
+  }
+});
 Vue.use(Vuex);
 
 Vue.config.productionTip = false;
@@ -13,8 +20,8 @@ Vue.config.productionTip = false;
 const store = new Vuex.Store({
   state: {
     position: {
-      latitude: 0,
-      longitude: 0
+      lat: 0,
+      lng: 0
     },
     token: undefined,
     pharmacies: [],
@@ -22,13 +29,9 @@ const store = new Vuex.Store({
     trainings: []
   },
   mutations: {
-    restoreState(state) {
-      state = JSON.parse(window.localStorage.getItem("state"));
-      console.log("restoring state", state);
-    },
     updatePosition(state, pos) {
-      state.position.latitude = pos.latitude;
-      state.position.longitude = pos.longitude;
+      state.position.lat = pos.latitude;
+      state.position.lng = pos.longitude;
       window.localStorage.setItem("state", JSON.stringify(state));
     },
     setToken(state, token) {
@@ -88,10 +91,3 @@ new Vue({
   components: { App },
   template: "<App/>"
 });
-
-if (window.location.protocol === "file:" || window.location.port === "8000") {
-  var cordovaScript = document.createElement("script");
-  cordovaScript.setAttribute("type", "text/javascript");
-  cordovaScript.setAttribute("src", "cordova.js");
-  document.body.appendChild(cordovaScript);
-}
