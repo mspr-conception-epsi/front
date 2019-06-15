@@ -4,6 +4,7 @@
       <div class="pharmacy-description">
         <p class="item">Pharmacie selectionnée: {{ selected ? selected.name : "" }}</p>
         <button class="button item" @click="updatePharmacy()">Modifier</button>
+        <button class="button item" @click="addNoteForPharmacy()">Ajouter une note</button>
       </div>
       <gmap-map
         :center="$store.state.position"
@@ -84,10 +85,18 @@ export default {
         return;
       }
       this.$router.push({ path: `/pharmacy/${this.selected.id}` });
+    },
+    addNoteForPharmacy() {
+      if (!this.selected) {
+        console.error("Error: no marker selected");
+        return;
+      }
+      this.$router.push({ path: `/note/${this.selected.id}` });
     }
   },
   mounted() {
     if (!this.$store.state.token) {
+      console.log("here");
       const state = JSON.parse(window.localStorage.getItem("state"));
       this.$store.commit("setToken", state.token);
       state.pharmacies.map(pharmacy => {
@@ -99,7 +108,9 @@ export default {
       state.trainings.map(training => {
         this.$store.commit("addTraining", training);
       });
+      console.log(this.$store.state.token);
       if (!this.$store.state.token) {
+        console.log("and here");
         this.$router.push({ path: `/login` });
         return;
       }

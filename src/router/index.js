@@ -55,7 +55,7 @@ export default new Router({
       component: Training
     },
     {
-      path: "/note",
+      path: "/note/:id",
       name: "UpdateNote",
       component: UpdateNote
     }

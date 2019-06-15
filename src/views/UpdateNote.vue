@@ -77,6 +77,30 @@ export default {
     if (!this.id || this.id === "") {
       console.error("no id provided");
     }
+    if (!this.$store.state.token) {
+      const state = JSON.parse(window.localStorage.getItem("state"));
+      this.$store.commit("setToken", state.token);
+      state.pharmacies.map(pharmacy => {
+        this.$store.commit("addPharmacy", pharmacy);
+      });
+      state.products.map(product => {
+        this.$store.commit("addProduct", product);
+      });
+      state.trainings.map(training => {
+        this.$store.commit("addTraining", training);
+      });
+      if (!this.$store.state.token) {
+        this.$router.push({ path: `/login` });
+        return;
+      }
+    }
+    const pharmacy = this.$store.state.pharmacies.find(
+      p => p.id === Number(this.id)
+    );
+    if (!pharmacy) {
+      console.error("no pharmacy found");
+      return;
+    }
   }
 };
 </script>
