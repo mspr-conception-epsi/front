@@ -29,6 +29,21 @@ const store = new Vuex.Store({
     trainings: []
   },
   mutations: {
+    destroyState(state) {
+      state.token = undefined;
+      window.localStorage.removeItem("state");
+      Object.assign(state, {
+        position: {
+          lat: 0,
+          lng: 0
+        },
+        token: undefined,
+        pharmacies: [],
+        products: [],
+        trainings: []
+      });
+      console.log(state);
+    },
     updatePosition(state, pos) {
       state.position.lat = pos.latitude;
       state.position.lng = pos.longitude;

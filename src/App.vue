@@ -24,10 +24,15 @@
           <a class="navbar-item" @click="onTrainingsClick">Formations</a>
         </div>
 
-        <div class="navbar-end" v-if="!$store.state.token">
-          <div class="navbar-item">
+        <div class="navbar-end">
+          <div class="navbar-item" v-if="!$store.state.token">
             <div class="buttons">
               <a class="button is-light" @click="onLoginClick">Connexion</a>
+            </div>
+          </div>
+          <div class="navbar-item" v-else>
+            <div class="buttons">
+              <a class="button is-light" @click="onLogoutClick">Déconnexion</a>
             </div>
           </div>
         </div>
@@ -72,6 +77,12 @@ export default {
       this.$router.push({ path: "/compute" });
     },
     onLoginClick() {
+      this.$router.push({ path: "/login" });
+    },
+    onLogoutClick() {
+      this.$store.commit("destroyState", {});
+      console.log(this.$store.state);
+      console.log(window.localStorage.getItem("state"));
       this.$router.push({ path: "/login" });
     },
     onProductsClick() {
