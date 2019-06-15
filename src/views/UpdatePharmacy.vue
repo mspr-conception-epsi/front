@@ -64,7 +64,6 @@
   </section>
 </template>
 <script>
-//import { checkOffline } from "@/utils/utils";
 export default {
   name: "Form",
   data() {

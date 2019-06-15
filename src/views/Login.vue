@@ -17,7 +17,6 @@
 
 <script>
 import { auth } from "../api/auth";
-import { checkOffline } from "@/utils/utils";
 export default {
   name: "Login",
   data() {
@@ -29,13 +28,6 @@ export default {
   },
   methods: {
     onSubmitClick() {
-      if (checkOffline()) {
-        this.$store.commit("restoreState");
-        if (this.$store.state.login) {
-          this.$router.push({ path: "/" });
-        }
-        return;
-      }
       auth(this.login, this.password)
         .then(data => {
           this.$store.commit("setToken", data.token);
