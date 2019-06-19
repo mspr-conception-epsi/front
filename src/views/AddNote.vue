@@ -81,6 +81,12 @@ export default {
       state.trainings.map(training => {
         this.$store.commit("addTraining", training);
       });
+      state.notes.map(note => {
+        this.$store.commit("addNote", note);
+      });
+      state.forms.map(form => {
+        this.$store.commit("addForm", form);
+      });
     }
     const pharmacy = this.$store.state.pharmacies.find(
       p => p.id === Number(this.id)

@@ -118,24 +118,7 @@ export default {
       this.checkForm();
       console.log("form is submitted");
     },
-    addressToLatLong() {
-      if (!this.deviceRdy) {
-        return;
-      }
-      // plugin.google.maps.Geocoder.geocode(
-      //   {
-      //     address: this.address
-      //   },
-      //   results => {
-      //     if (results.length) {
-      //       console.log(results);
-      //     } else {
-      //       console.log(results);
-      //       this.addressError = true;
-      //     }
-      //   }
-      // );
-    }
+    addressToLatLong() {}
   },
   mounted() {
     this.id = this.$route.params.id;
@@ -161,6 +144,12 @@ export default {
       });
       state.trainings.map(training => {
         this.$store.commit("addTraining", training);
+      });
+      state.notes.map(note => {
+        this.$store.commit("addNote", note);
+      });
+      state.forms.map(form => {
+        this.$store.commit("addForm", form);
       });
     }
     const pharmacy = this.$store.state.pharmacies.find(

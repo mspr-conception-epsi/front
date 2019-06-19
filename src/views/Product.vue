@@ -47,6 +47,12 @@ export default {
       state.trainings.map(training => {
         this.$store.commit("addTraining", training);
       });
+      state.notes.map(note => {
+        this.$store.commit("addNote", note);
+      });
+      state.forms.map(form => {
+        this.$store.commit("addForm", form);
+      });
     }
     if (this.$store.state.products.length <= 0) {
       //fetch from sqli or api

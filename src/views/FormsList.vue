@@ -6,7 +6,7 @@
         <th>Nom</th>
         <th>Modifier</th>
         <th>Supprimer</th>
-        <th>Effectuer</th>
+        <th>Remplir</th>
       </tr>
       <tr v-for="form in forms" :key="form.id">
         <td>{{ form.name }}</td>
@@ -52,7 +52,10 @@ export default {
         id: form.id
       })
         .then(() => this.forms.splice(this.forms.indexOf(form), 1))
-        .catch(err => console.error(err));
+        .catch(err => {
+          console.error(err);
+          this.$router.push({ path: `/login` });
+        });
     },
     fillForm(form) {
       this.$router.push({ path: `/form/fill/${form.id}` });
