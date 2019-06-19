@@ -10,6 +10,7 @@ import ProductList from "../views/ProductList";
 import Product from "../views/Product";
 import TrainingList from "../views/TrainingList";
 import Training from "../views/Training";
+import AddForm from "../views/AddForm";
 
 Vue.use(Router);
 
@@ -64,6 +65,11 @@ export default new Router({
       path: "/notes/list/:id",
       name: "NoteList",
       component: NoteList
+    },
+    {
+      path: "/form/new",
+      name: "AddForm",
+      component: AddForm
     }
   ]
 });

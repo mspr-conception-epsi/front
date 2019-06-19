@@ -6,6 +6,7 @@
         <button class="button item" @click="updatePharmacy()">Modifier</button>
         <button class="button item" @click="addNoteForPharmacy()">Ajouter une note</button>
         <button class="button item" @click="listNotesForPharmacy()">Afficher la liste des notes</button>
+        <button class="button item" @click="addNoteForPharmacy()">Ajouter une note à la pharmacie</button>
       </div>
       <gmap-map
         :center="$store.state.position"
@@ -94,7 +95,8 @@ export default {
       }
       this.$router.push({ path: `/note/new/${this.selected.id}` });
     },
-    listNotesForPharmacy() {if (!this.selected) {
+    listNotesForPharmacy() {
+      if (!this.selected) {
         console.error("Error: no marker selected");
         return;
       }
@@ -150,6 +152,13 @@ canvas {
   display: flex;
   flex-direction: row;
   padding: 1rem;
+}
+@media (max-width: 640px) {
+  .pharmacy-description {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
 }
 .pharmacy-description > .item {
   padding: 0 1rem;

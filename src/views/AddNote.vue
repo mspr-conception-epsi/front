@@ -50,8 +50,7 @@ export default {
         content: this.note
       })
         .then(() => {
-          console.log("done");
-          //redirect to notes list page
+          this.$router.push({ path: `/notes/list/${this.id}` });
         })
         .catch(err => {
           console.error(err);
@@ -96,13 +95,6 @@ export default {
 <style>
 .is-text-align-center {
   text-align: center;
-}
-.formElement {
-  max-width: 400px;
-}
-.is-vertical-center {
-  display: flex;
-  align-items: center;
 }
 .box {
   margin: 0 auto;

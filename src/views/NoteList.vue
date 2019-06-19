@@ -5,8 +5,8 @@
       <tr>
         <th>Note</th>
       </tr>
-      <tr v-for="product in products" :key="product.id">
-        <td>{{ product.price }} €</td>
+      <tr v-for="note in notes" :key="note.id">
+        <td>{{ note.content }}</td>
       </tr>
     </table>
   </div>

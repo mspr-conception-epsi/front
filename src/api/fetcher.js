@@ -13,7 +13,7 @@ export const fetchApi = async (method, url, token, args) => {
     throw new Error("Aucune réponse du serveur");
   }
   if (response.status >= 400) {
-    throw new Error(response.json());
+    throw new Error(await response.json());
   }
   return response.json();
 };
