@@ -1,7 +1,7 @@
 <template>
   <section class="section">
     <div class="box">
-      <h1 class="title is-text-align-center">Modification d'un formulaire</h1>
+      <h1 class="title is-text-align-center">Remplir un formulaire</h1>
       <div id="closeMe" class="notification is-danger" v-if="errors.length && displayErrors">
         <button class="delete" @click="closeBlock"></button>
         <b>Corrigez les erreurs suivantes :</b>
@@ -10,33 +10,21 @@
         </ul>
       </div>
       <section class="section">
-        <label for="nameInput" class="label">Nom du questionnaire</label>
-        <input
-          class="input"
-          type="input"
-          id="nameInput"
-          placeholder="Nom du questionnaire"
-          v-model="form.name"
-        >
+        <label for="nameInput" class="label">{{ form.name }}</label>
       </section>
       <section
         class="section questionColumn"
         v-for="(question, index) in form.questions"
         :key="question.id"
       >
-        <label for="nameInput" class="label">Entrez votre question</label>
-        <div class="questionRow">
-          <input
-            class="input"
-            @input="(e) => updateQuestion(e.srcElement.value, index)"
-            placeholder="Entrez votre question ici"
-            v-bind:value="question.label"
-          >
-          <input class="button is-danger" type="submit" value="X" @click="removeQuestion(index)">
-        </div>
+        <label for="nameInput" class="label">{{ question.label }}</label>
+        <input
+          class="input"
+          @input="(e) => updateQuestion(e.srcElement.value, index)"
+          placeholder="Entrez votre réponse ici"
+        >
       </section>
       <br>
-      <input class="button is-link" type="submit" value="Ajouter une question" @click="addQuestion">
       <input class="button is-primary" type="submit" value="Valider" @click="submitForm">
     </div>
   </section>
@@ -44,7 +32,7 @@
 <script>
 import { fetchApi } from "@/api/fetcher";
 export default {
-  name: "UpdateForm",
+  name: "FillForm",
   data() {
     return {
       errors: [],
@@ -104,29 +92,24 @@ export default {
     },
     submitForm() {
       this.checkForm();
-      fetchApi("POST", "form/update", this.$store.state.token, this.form)
-        .then(() => {
-          console.log("done");
-          this.$router.push({ item: "/forms" });
-        })
-        .catch(err => {
-          console.error(err);
-          this.errors = [];
-          this.errors.push(err);
-          this.displayErrors = true;
-        });
-    },
-    addQuestion() {
-      this.questions.push("");
-    },
-    removeQuestion(index) {
-      this.questions.splice(index, 1);
+      this.form.questions.map(question => {
+        fetchApi("POST", "response/create", this.$store.state.token, question)
+          .then(() => {
+            this.$router.push({ item: "/forms" });
+          })
+          .catch(err => {
+            console.error(err);
+            this.errors = [];
+            this.errors.push(err);
+            this.displayErrors = true;
+          });
+      });
     },
     updateQuestion(newValue, questionIndex) {
       const question = this.form.questions.find(
         (_, index) => index === questionIndex
       );
-      question.label = newValue;
+      question.content = newValue;
     }
   },
   mounted() {

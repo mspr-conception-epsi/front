@@ -14,7 +14,7 @@ export const auth = async (username, password) => {
     throw new Error("Aucune réponse du serveur");
   }
   if (response.status >= 400) {
-    throw new Error(response.json());
+    throw new Error(await (response ? response.json() : undefined));
   }
   return response.json();
 };

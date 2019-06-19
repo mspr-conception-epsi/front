@@ -85,27 +85,23 @@ export default {
         this.$store.commit("addForm", form);
       });
     }
-    try {
-      this.fetchForms().then(data => {
-        if (data) {
-          data.map(form => {
-            if (this.forms.find(n => n.id === form.id)) {
-              this.forms.forEach(n => {
-                if (n.id === form.id) {
-                  n = form;
-                  this.$store.commit("setForm", form);
-                }
-              });
-            } else {
-              this.forms.push(form);
-              this.$store.commit("addForm", form);
-            }
-          });
-        }
-      });
-    } catch (err) {
-      console.error(err);
-    }
+    this.fetchForms().then(data => {
+      if (data) {
+        data.map(form => {
+          if (this.forms.find(n => n.id === form.id)) {
+            this.forms.forEach(n => {
+              if (n.id === form.id) {
+                n = form;
+                this.$store.commit("setForm", form);
+              }
+            });
+          } else {
+            this.forms.push(form);
+            this.$store.commit("addForm", form);
+          }
+        });
+      }
+    });
   }
 };
 </script>

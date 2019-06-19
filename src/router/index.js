@@ -13,6 +13,7 @@ import Training from "../views/Training";
 import AddForm from "../views/AddForm";
 import UpdateForm from "../views/UpdateForm";
 import FormsList from "../views/FormsList";
+import FillForm from "../views/FillForm";
 
 Vue.use(Router);
 
@@ -82,6 +83,11 @@ export default new Router({
       path: "/forms",
       name: "FormsList",
       component: FormsList
+    },
+    {
+      path: "/form/fill/:id",
+      name: "FillForm",
+      component: FillForm
     }
   ]
 });
