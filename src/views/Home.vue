@@ -5,6 +5,7 @@
         <p class="item">Pharmacie selectionnée: {{ selected ? selected.name : "" }}</p>
         <button class="button item" @click="updatePharmacy()">Modifier</button>
         <button class="button item" @click="addNoteForPharmacy()">Ajouter une note</button>
+        <button class="button item" @click="listNotesForPharmacy()">Afficher la liste des notes</button>
       </div>
       <gmap-map
         :center="$store.state.position"
@@ -92,6 +93,12 @@ export default {
         return;
       }
       this.$router.push({ path: `/note/new/${this.selected.id}` });
+    },
+    listNotesForPharmacy() {if (!this.selected) {
+        console.error("Error: no marker selected");
+        return;
+      }
+      this.$router.push({ path: `/notes/list/${this.selected.id}` });
     }
   },
   mounted() {

@@ -5,6 +5,7 @@ import Compute from "../views/Compute";
 import Login from "../views/Login";
 import UpdatePharmacy from "../views/UpdatePharmacy";
 import AddNote from "../views/AddNote";
+import NoteList from "../views/NoteList";
 import ProductList from "../views/ProductList";
 import Product from "../views/Product";
 import TrainingList from "../views/TrainingList";
@@ -58,6 +59,11 @@ export default new Router({
       path: "/note/new/:id",
       name: "AddNote",
       component: AddNote
+    },
+    {
+      path: "/notes/list/:id",
+      name: "NoteList",
+      component: NoteList
     }
   ]
 });

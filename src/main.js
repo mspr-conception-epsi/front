@@ -26,7 +26,8 @@ const store = new Vuex.Store({
     token: undefined,
     pharmacies: [],
     products: [],
-    trainings: []
+    trainings: [],
+    notes: []
   },
   mutations: {
     destroyState(state) {
@@ -61,6 +62,20 @@ const store = new Vuex.Store({
           }
         });
       }
+      window.localStorage.setItem("state", JSON.stringify(state));
+    },
+    setNote(state, note) {
+      if (state.notes.find(row => row.id === note.id)) {
+        state.notes.forEach(row => {
+          if (row.id === note.id) {
+            row = note;
+          }
+        });
+      }
+      window.localStorage.setItem("state", JSON.stringify(state));
+    },
+    addNote(state, note) {
+      state.notes.push(note);
       window.localStorage.setItem("state", JSON.stringify(state));
     },
     addPharmacy(state, pharmacy) {
