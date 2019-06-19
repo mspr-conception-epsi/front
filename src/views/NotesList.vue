@@ -15,7 +15,7 @@
 <script>
 import { fetchApi } from "@/api/fetcher";
 export default {
-  name: "NoteList",
+  name: "NotesList",
   data() {
     return {
       id: undefined,

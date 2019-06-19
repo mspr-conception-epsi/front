@@ -27,7 +27,8 @@ const store = new Vuex.Store({
     pharmacies: [],
     products: [],
     trainings: [],
-    notes: []
+    notes: [],
+    forms: []
   },
   mutations: {
     destroyState(state) {
@@ -43,7 +44,6 @@ const store = new Vuex.Store({
         products: [],
         trainings: []
       });
-      console.log(state);
     },
     updatePosition(state, pos) {
       state.position.lat = pos.latitude;
@@ -75,6 +75,20 @@ const store = new Vuex.Store({
       window.localStorage.setItem("state", JSON.stringify(state));
     },
     addNote(state, note) {
+      state.notes.push(note);
+      window.localStorage.setItem("state", JSON.stringify(state));
+    },
+    setForm(state, form) {
+      if (state.forms.find(row => row.id === form.id)) {
+        state.forms.forEach(row => {
+          if (row.id === form.id) {
+            row = form;
+          }
+        });
+      }
+      window.localStorage.setItem("state", JSON.stringify(state));
+    },
+    addForm(state, note) {
       state.notes.push(note);
       window.localStorage.setItem("state", JSON.stringify(state));
     },

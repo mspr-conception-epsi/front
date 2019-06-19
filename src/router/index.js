@@ -5,12 +5,14 @@ import Compute from "../views/Compute";
 import Login from "../views/Login";
 import UpdatePharmacy from "../views/UpdatePharmacy";
 import AddNote from "../views/AddNote";
-import NoteList from "../views/NoteList";
+import NotesList from "../views/NotesList";
 import ProductList from "../views/ProductList";
 import Product from "../views/Product";
 import TrainingList from "../views/TrainingList";
 import Training from "../views/Training";
 import AddForm from "../views/AddForm";
+import UpdateForm from "../views/UpdateForm";
+import FormsList from "../views/FormsList";
 
 Vue.use(Router);
 
@@ -63,13 +65,23 @@ export default new Router({
     },
     {
       path: "/notes/list/:id",
-      name: "NoteList",
-      component: NoteList
+      name: "NotesList",
+      component: NotesList
     },
     {
       path: "/form/new",
       name: "AddForm",
       component: AddForm
+    },
+    {
+      path: "/form/update/:id",
+      name: "UpdateForm",
+      component: UpdateForm
+    },
+    {
+      path: "/forms",
+      name: "FormsList",
+      component: FormsList
     }
   ]
 });

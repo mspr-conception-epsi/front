@@ -22,6 +22,7 @@
           <a class="navbar-item" @click="onComputeClick">Calculette</a>
           <a class="navbar-item" @click="onProductsClick">Produits</a>
           <a class="navbar-item" @click="onTrainingsClick">Formations</a>
+          <a class="navbar-item" @click="onFormsClick">Formulaires</a>
         </div>
 
         <div class="navbar-end">
@@ -87,6 +88,9 @@ export default {
     },
     onProductsClick() {
       this.$router.push({ path: "/products" });
+    },
+    onFormsClick() {
+      this.$router.push({ path: "/forms" });
     },
     onTrainingsClick() {
       this.$router.push({ path: "/trainings" });
