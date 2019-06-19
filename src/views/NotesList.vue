@@ -87,6 +87,9 @@ export default {
   max-width: 400px;
 }
 table {
-  overflow: auto;
+  width: 100%;
+}
+.container {
+  overflow-x: auto;
 }
 </style>

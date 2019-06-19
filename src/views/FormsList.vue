@@ -11,13 +11,13 @@
       <tr v-for="form in forms" :key="form.id">
         <td>{{ form.name }}</td>
         <td>
-          <input class="button is-link" type="submit" value="Modifier" @click="updateForm(form)">
+          <input class="button is-link" type="submit" value="M" @click="updateForm(form)">
         </td>
         <td>
           <input class="button is-danger" type="submit" value="X" @click="removeForm(form)">
         </td>
         <td>
-          <input class="button is-primary" type="submit" value="Remplir" @click="fillForm(form)">
+          <input class="button is-primary" type="submit" value="R" @click="fillForm(form)">
         </td>
       </tr>
     </table>
@@ -112,6 +112,9 @@ export default {
   max-width: 400px;
 }
 table {
-  overflow: auto;
+  width: 100%;
+}
+.container {
+  overflow-x: auto;
 }
 </style>
