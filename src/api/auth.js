@@ -1,4 +1,4 @@
-const BASE_URL = "http://shyndard.eu:8080/api";
+const BASE_URL = "https://mspr-conception-back.ked.ovh/api";
 // eslint-disable-next-line space-before-function-paren
 export const auth = async (username, password) => {
   const credentials = window.btoa(

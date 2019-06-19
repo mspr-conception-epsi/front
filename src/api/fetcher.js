@@ -1,4 +1,4 @@
-const BASE_URL = "http://shyndard.eu:8080/api";
+const BASE_URL = "https://mspr-conception-back.ked.ovh/api";
 
 export const fetchApi = async (method, url, token, args) => {
   const response = await fetch(`${BASE_URL}/${url}`, {
