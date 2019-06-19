@@ -91,7 +91,7 @@ export default {
         console.error("Error: no marker selected");
         return;
       }
-      this.$router.push({ path: `/note/${this.selected.id}` });
+      this.$router.push({ path: `/note/new/${this.selected.id}` });
     }
   },
   mounted() {

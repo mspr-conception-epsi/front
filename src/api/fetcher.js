@@ -4,9 +4,10 @@ export const fetchApi = async (method, url, token, args) => {
   const response = await fetch(`${BASE_URL}/${url}`, {
     method: method,
     headers: {
+      "Content-Type": "application/json",
       authorization: `Bearer ${token}`
     },
-    data: JSON.stringify(args)
+    body: JSON.stringify(args)
   });
   if (!response) {
     throw new Error("Aucune réponse du serveur");

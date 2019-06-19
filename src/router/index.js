@@ -4,7 +4,7 @@ import Home from "../views/Home";
 import Compute from "../views/Compute";
 import Login from "../views/Login";
 import UpdatePharmacy from "../views/UpdatePharmacy";
-import UpdateNote from "../views/UpdateNote";
+import AddNote from "../views/AddNote";
 import ProductList from "../views/ProductList";
 import Product from "../views/Product";
 import TrainingList from "../views/TrainingList";
@@ -55,9 +55,9 @@ export default new Router({
       component: Training
     },
     {
-      path: "/note/:id",
-      name: "UpdateNote",
-      component: UpdateNote
+      path: "/note/new/:id",
+      name: "AddNote",
+      component: AddNote
     }
   ]
 });
