@@ -36,7 +36,7 @@ export default {
       this.$router.push({ path: `/product/${id}` });
     },
     onComputeClick(id) {
-      this.$router.push({ path: `/compute/${id}` });
+      this.$router.push({ path: `/compute/product/${id}` });
     },
     async fetchProducts() {
       if (!this.$store.state.token) {

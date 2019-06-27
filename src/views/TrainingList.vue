@@ -6,16 +6,12 @@
         <th>Nom</th>
         <th>Prix</th>
         <th>Info</th>
-        <th>Calculatrice</th>
       </tr>
       <tr v-for="training in trainings" :key="training.id">
         <td>{{ training.title }}</td>
         <td>{{ training.price }} €</td>
         <td>
           <button class="button" @click="onDescriptionClick(training.id)">Info</button>
-        </td>
-        <td>
-          <button class="button" @click="onComputeClick(training.id)">Calculatrice</button>
         </td>
       </tr>
     </table>
@@ -34,9 +30,6 @@ export default {
   methods: {
     onDescriptionClick(id) {
       this.$router.push({ path: `/training/${id}` });
-    },
-    onComputeClick(id) {
-      this.$router.push({ path: `/compute/${id}` });
     },
     async fetchTrainings() {
       if (!this.$store.state.token) {

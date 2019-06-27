@@ -103,7 +103,9 @@ export default {
       discountRatePanel: false,
       operatingPurchasePricePanel: false,
       operatingSellPricePanel: false,
-      multiplierPanel: false
+      multiplierPanel: false,
+      id: undefined,
+      type: undefined
     };
   },
   methods: {
@@ -123,28 +125,52 @@ export default {
     }
   },
   mounted() {
+    const state = JSON.parse(window.localStorage.getItem("state"));
+    if (!state.token) {
+      this.$router.push({ path: `/login` });
+      return;
+    }
+
     if (!this.$store.state.token) {
-      const state = JSON.parse(window.localStorage.getItem("state"));
-      if (!state.token) {
-        this.$router.push({ path: `/login` });
+      this.$store.commit("setToken", state.token);
+    }
+    state.pharmacies.map(pharmacy => {
+      this.$store.commit("addPharmacy", pharmacy);
+    });
+    state.products.map(product => {
+      this.$store.commit("addProduct", product);
+    });
+    state.trainings.map(training => {
+      this.$store.commit("addTraining", training);
+    });
+    state.notes.map(note => {
+      this.$store.commit("addNote", note);
+    });
+    state.forms.map(form => {
+      this.$store.commit("addForm", form);
+    });
+    this.id = Number(this.$route.params.id);
+    if (!this.id) {
+      console.error("no id provided");
+      return;
+    }
+    this.type = this.$route.params.type;
+    if (!this.type || this.type === "") {
+      console.error("no type provided");
+      return;
+    }
+    if (this.type === "product") {
+      console.log(this.id);
+      const product = this.$store.state.products.find(
+        product => product.id === this.id
+      );
+      if (!product) {
+        console.error("couldn't find provided product");
         return;
       }
-      this.$store.commit("setToken", state.token);
-      state.pharmacies.map(pharmacy => {
-        this.$store.commit("addPharmacy", pharmacy);
-      });
-      state.products.map(product => {
-        this.$store.commit("addProduct", product);
-      });
-      state.trainings.map(training => {
-        this.$store.commit("addTraining", training);
-      });
-      state.notes.map(note => {
-        this.$store.commit("addNote", note);
-      });
-      state.forms.map(form => {
-        this.$store.commit("addForm", form);
-      });
+      this.operatingPurchasePrice = product.price;
+    } else {
+      console.error("wrong type provided");
     }
   }
 };

@@ -1,7 +1,7 @@
 <template>
   <section class="section">
     <div class="box">
-      <h1 class="title is-text-align-center">Update d'une Pharmacie</h1>
+      <h1 class="title is-text-align-center">Modification d'une Pharmacie</h1>
       <div id="closeMe" class="notification is-danger" v-if="errors.length && displayErrors">
         <button class="delete" @click="closeBlock"></button>
         <b>Corrigez les erreurs suivantes :</b>

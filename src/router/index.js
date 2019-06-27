@@ -25,7 +25,7 @@ export default new Router({
       component: Home
     },
     {
-      path: "/compute",
+      path: "/compute/:type/:id",
       name: "Compute",
       component: Compute
     },
