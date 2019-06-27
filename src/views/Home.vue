@@ -6,7 +6,6 @@
         <button class="button item" @click="updatePharmacy()">Modifier</button>
         <button class="button item" @click="addNoteForPharmacy()">Ajouter une note</button>
         <button class="button item" @click="listNotesForPharmacy()">Afficher la liste des notes</button>
-        <button class="button item" @click="addNoteForPharmacy()">Ajouter une note à la pharmacie</button>
       </div>
       <gmap-map
         :center="$store.state.position"
