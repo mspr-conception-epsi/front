@@ -1,5 +1,48 @@
 version: 2
 jobs:
+  ui/install-dependencies:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "ui/package-lock.json" }}
+            - dependencies-
+      - run:
+          name: Download UI dependencies
+          command: npm ci
+      - save_cache:
+          paths:
+            - ./ui/node_modules
+          key: dependencies-{{ checksum "ui/package-lock.json" }}
+  lint:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "ui/package-lock.json" }}
+            - dependencies-
+      - run:
+          name: Lint
+          command: npm run lint
+  ui/build:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "ui/package-lock.json" }}
+            - dependencies-
+      - run:
+          name: Build ui
+          command: npm run build
+      - store_artifacts:
+          path: ./public
+          destination: frontend-prod-build
   app-deploy:
     docker:
       - image: circleci/node:10
