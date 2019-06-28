@@ -131,7 +131,7 @@ export default {
     }
     if (!this.$store.state.token) {
       const state = JSON.parse(window.localStorage.getItem("state"));
-      if (!state.token) {
+      if (!state || !state.token) {
         this.$router.push({ path: `/login` });
         return;
       }
